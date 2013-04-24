@@ -17,6 +17,8 @@
 		C271AAC217287E3C0037EBB8 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C271AAA217287E3B0037EBB8 /* Cocoa.framework */; };
 		C271AACA17287E3C0037EBB8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C271AAC817287E3C0037EBB8 /* InfoPlist.strings */; };
 		C271AACD17287E3C0037EBB8 /* ExampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C271AACC17287E3C0037EBB8 /* ExampleTests.m */; };
+		C271AAD81728800B0037EBB8 /* KBSCloudAppAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = C271AAD71728800B0037EBB8 /* KBSCloudAppAPI.m */; };
+		C271AAD91728800B0037EBB8 /* KBSCloudAppAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = C271AAD71728800B0037EBB8 /* KBSCloudAppAPI.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +51,8 @@
 		C271AAC917287E3C0037EBB8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		C271AACB17287E3C0037EBB8 /* ExampleTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ExampleTests.h; sourceTree = "<group>"; };
 		C271AACC17287E3C0037EBB8 /* ExampleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ExampleTests.m; sourceTree = "<group>"; };
+		C271AAD61728800B0037EBB8 /* KBSCloudAppAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KBSCloudAppAPI.h; path = ../KBSCloudAppAPI.h; sourceTree = "<group>"; };
+		C271AAD71728800B0037EBB8 /* KBSCloudAppAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KBSCloudAppAPI.m; path = ../KBSCloudAppAPI.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +79,8 @@
 		C271AA9617287E3B0037EBB8 = {
 			isa = PBXGroup;
 			children = (
+				C271AAD61728800B0037EBB8 /* KBSCloudAppAPI.h */,
+				C271AAD71728800B0037EBB8 /* KBSCloudAppAPI.m */,
 				C271AAA817287E3B0037EBB8 /* Example */,
 				C271AAC517287E3C0037EBB8 /* ExampleTests */,
 				C271AAA117287E3B0037EBB8 /* Frameworks */,
@@ -264,6 +270,7 @@
 			files = (
 				C271AAAF17287E3C0037EBB8 /* main.m in Sources */,
 				C271AAB617287E3C0037EBB8 /* KBSAppDelegate.m in Sources */,
+				C271AAD81728800B0037EBB8 /* KBSCloudAppAPI.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -272,6 +279,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C271AACD17287E3C0037EBB8 /* ExampleTests.m in Sources */,
+				C271AAD91728800B0037EBB8 /* KBSCloudAppAPI.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -453,6 +461,7 @@
 				C271AAD217287E3C0037EBB8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C271AAD317287E3C0037EBB8 /* Build configuration list for PBXNativeTarget "ExampleTests" */ = {
 			isa = XCConfigurationList;
@@ -461,6 +470,7 @@
 				C271AAD517287E3C0037EBB8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
