@@ -9,4 +9,23 @@
 
 @implementation KBSCloudAppAPI
 
+- (KBSCloudAppAPI *)sharedAPI {
+  static KBSCloudAppAPI *sharedAPI = nil;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    sharedAPI = [[KBSCloudAppAPI alloc] init];
+  });
+
+  return sharedAPI;
+}
+
+- (id)init {
+  self = [super init];
+  if (!self) {
+    return nil;
+  }
+
+  return self;
+}
+
 @end

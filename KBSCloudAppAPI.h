@@ -9,4 +9,6 @@
 
 @interface KBSCloudAppAPI : NSObject
 
+- (KBSCloudAppAPI *)sharedAPI;
+
 @end
