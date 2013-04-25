@@ -38,6 +38,8 @@
 		C271AF3F17288ACE0037EBB8 /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = C271AAF017288ACB0037EBB8 /* UIImageView+AFNetworking.m */; };
 		C271B57717288BA60037EBB8 /* libExpecta-macosx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C271B56D17288BA60037EBB8 /* libExpecta-macosx.a */; };
 		C271B58C17288BCD0037EBB8 /* libSpecta-macosx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C271B57E17288BCD0037EBB8 /* libSpecta-macosx.a */; };
+		C271B5931728CC9E0037EBB8 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C271B5921728CC9E0037EBB8 /* SystemConfiguration.framework */; };
+		C271B5951728CCA30037EBB8 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C271B5941728CCA30037EBB8 /* CoreServices.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -134,6 +136,8 @@
 		C271B58917288BCD0037EBB8 /* SPTSharedExampleGroups.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPTSharedExampleGroups.h; path = Specta/products/SPTSharedExampleGroups.h; sourceTree = "<group>"; };
 		C271B58A17288BCD0037EBB8 /* SPTSpec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPTSpec.h; path = Specta/products/SPTSpec.h; sourceTree = "<group>"; };
 		C271B58F17288C1D0037EBB8 /* KBSCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KBSCommon.h; sourceTree = "<group>"; };
+		C271B5921728CC9E0037EBB8 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		C271B5941728CCA30037EBB8 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,6 +145,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C271B5951728CCA30037EBB8 /* CoreServices.framework in Frameworks */,
+				C271B5931728CC9E0037EBB8 /* SystemConfiguration.framework in Frameworks */,
 				C271AAA317287E3B0037EBB8 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -183,6 +189,8 @@
 		C271AAA117287E3B0037EBB8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C271B5941728CCA30037EBB8 /* CoreServices.framework */,
+				C271B5921728CC9E0037EBB8 /* SystemConfiguration.framework */,
 				C271AAA217287E3B0037EBB8 /* Cocoa.framework */,
 				C271AAC017287E3C0037EBB8 /* SenTestingKit.framework */,
 				C271AAA417287E3B0037EBB8 /* Other Frameworks */,
