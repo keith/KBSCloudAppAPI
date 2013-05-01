@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C224DFAA17316F3600AED0C5 /* KBSSetUsernameTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C224DFA917316F3600AED0C5 /* KBSSetUsernameTests.m */; };
 		C271AAA317287E3B0037EBB8 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C271AAA217287E3B0037EBB8 /* Cocoa.framework */; };
 		C271AAAD17287E3B0037EBB8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C271AAAB17287E3B0037EBB8 /* InfoPlist.strings */; };
 		C271AAAF17287E3C0037EBB8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C271AAAE17287E3C0037EBB8 /* main.m */; };
@@ -17,25 +18,15 @@
 		C271AAC217287E3C0037EBB8 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C271AAA217287E3B0037EBB8 /* Cocoa.framework */; };
 		C271AACA17287E3C0037EBB8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C271AAC817287E3C0037EBB8 /* InfoPlist.strings */; };
 		C271AAD81728800B0037EBB8 /* KBSCloudAppAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = C271AAD71728800B0037EBB8 /* KBSCloudAppAPI.m */; };
-		C271AAD91728800B0037EBB8 /* KBSCloudAppAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = C271AAD71728800B0037EBB8 /* KBSCloudAppAPI.m */; };
 		C271AF2E17288ACE0037EBB8 /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = C271AADF17288ACB0037EBB8 /* AFHTTPClient.m */; };
-		C271AF2F17288ACE0037EBB8 /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = C271AADF17288ACB0037EBB8 /* AFHTTPClient.m */; };
 		C271AF3017288ACE0037EBB8 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = C271AAE117288ACB0037EBB8 /* AFHTTPRequestOperation.m */; };
-		C271AF3117288ACE0037EBB8 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = C271AAE117288ACB0037EBB8 /* AFHTTPRequestOperation.m */; };
 		C271AF3217288ACE0037EBB8 /* AFImageRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = C271AAE317288ACB0037EBB8 /* AFImageRequestOperation.m */; };
-		C271AF3317288ACE0037EBB8 /* AFImageRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = C271AAE317288ACB0037EBB8 /* AFImageRequestOperation.m */; };
 		C271AF3417288ACE0037EBB8 /* AFJSONRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = C271AAE517288ACB0037EBB8 /* AFJSONRequestOperation.m */; };
-		C271AF3517288ACE0037EBB8 /* AFJSONRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = C271AAE517288ACB0037EBB8 /* AFJSONRequestOperation.m */; };
 		C271AF3617288ACE0037EBB8 /* AFNetworkActivityIndicatorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C271AAE717288ACB0037EBB8 /* AFNetworkActivityIndicatorManager.m */; };
-		C271AF3717288ACE0037EBB8 /* AFNetworkActivityIndicatorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C271AAE717288ACB0037EBB8 /* AFNetworkActivityIndicatorManager.m */; };
 		C271AF3817288ACE0037EBB8 /* AFPropertyListRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = C271AAEA17288ACB0037EBB8 /* AFPropertyListRequestOperation.m */; };
-		C271AF3917288ACE0037EBB8 /* AFPropertyListRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = C271AAEA17288ACB0037EBB8 /* AFPropertyListRequestOperation.m */; };
 		C271AF3A17288ACE0037EBB8 /* AFURLConnectionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = C271AAEC17288ACB0037EBB8 /* AFURLConnectionOperation.m */; };
-		C271AF3B17288ACE0037EBB8 /* AFURLConnectionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = C271AAEC17288ACB0037EBB8 /* AFURLConnectionOperation.m */; };
 		C271AF3C17288ACE0037EBB8 /* AFXMLRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = C271AAEE17288ACB0037EBB8 /* AFXMLRequestOperation.m */; };
-		C271AF3D17288ACE0037EBB8 /* AFXMLRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = C271AAEE17288ACB0037EBB8 /* AFXMLRequestOperation.m */; };
 		C271AF3E17288ACE0037EBB8 /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = C271AAF017288ACB0037EBB8 /* UIImageView+AFNetworking.m */; };
-		C271AF3F17288ACE0037EBB8 /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = C271AAF017288ACB0037EBB8 /* UIImageView+AFNetworking.m */; };
 		C271B57717288BA60037EBB8 /* libExpecta-macosx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C271B56D17288BA60037EBB8 /* libExpecta-macosx.a */; };
 		C271B58C17288BCD0037EBB8 /* libSpecta-macosx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C271B57E17288BCD0037EBB8 /* libSpecta-macosx.a */; };
 		C271B5931728CC9E0037EBB8 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C271B5921728CC9E0037EBB8 /* SystemConfiguration.framework */; };
@@ -53,6 +44,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C224DFA917316F3600AED0C5 /* KBSSetUsernameTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KBSSetUsernameTests.m; sourceTree = "<group>"; };
 		C271AA9F17287E3B0037EBB8 /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C271AAA217287E3B0037EBB8 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		C271AAA517287E3B0037EBB8 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -236,6 +228,7 @@
 			isa = PBXGroup;
 			children = (
 				C271B58F17288C1D0037EBB8 /* KBSCommon.h */,
+				C224DFA917316F3600AED0C5 /* KBSSetUsernameTests.m */,
 				C271AAC617287E3C0037EBB8 /* Supporting Files */,
 			);
 			path = ExampleTests;
@@ -474,16 +467,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C271AAD91728800B0037EBB8 /* KBSCloudAppAPI.m in Sources */,
-				C271AF2F17288ACE0037EBB8 /* AFHTTPClient.m in Sources */,
-				C271AF3117288ACE0037EBB8 /* AFHTTPRequestOperation.m in Sources */,
-				C271AF3317288ACE0037EBB8 /* AFImageRequestOperation.m in Sources */,
-				C271AF3517288ACE0037EBB8 /* AFJSONRequestOperation.m in Sources */,
-				C271AF3717288ACE0037EBB8 /* AFNetworkActivityIndicatorManager.m in Sources */,
-				C271AF3917288ACE0037EBB8 /* AFPropertyListRequestOperation.m in Sources */,
-				C271AF3B17288ACE0037EBB8 /* AFURLConnectionOperation.m in Sources */,
-				C271AF3D17288ACE0037EBB8 /* AFXMLRequestOperation.m in Sources */,
-				C271AF3F17288ACE0037EBB8 /* UIImageView+AFNetworking.m in Sources */,
+				C224DFAA17316F3600AED0C5 /* KBSSetUsernameTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -687,6 +671,7 @@
 					"\"$(SRCROOT)/Vendor/Specta/products\"",
 					"\"$(SRCROOT)/Vendor/Specta/test/vendor/expecta\"",
 				);
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = octest;
@@ -722,6 +707,7 @@
 					"\"$(SRCROOT)/Vendor/Specta/products\"",
 					"\"$(SRCROOT)/Vendor/Specta/test/vendor/expecta\"",
 				);
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = octest;
