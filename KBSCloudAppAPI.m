@@ -38,7 +38,6 @@ static NSString * const baseAPI = @"http://my.cl.ly";
   [self registerHTTPOperationClass:[AFJSONRequestOperation class]];
   [self setParameterEncoding:AFJSONParameterEncoding];
   [self setDefaultHeader:@"Accept" value:@"application/json"];
-  [self setDefaultHeader:@"Content-Type" value:@"application/json"];
 
   return self;
 }
@@ -69,7 +68,12 @@ static NSString * const baseAPI = @"http://my.cl.ly";
     NSURL *responseURL = [NSURL URLWithString:[responseObject valueForKey:@"url"]];
     block(responseURL, responseObject, nil);
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-    block(nil, nil, error);
+    NSError *responseError = error;
+    if (operation.response.statusCode == 403 || operation.response.statusCode == 401) {
+      error = [self invalidCredentialsError];
+    }
+
+    block(nil, nil, responseError);
   }];
 }
 
@@ -97,6 +101,11 @@ static NSString * const baseAPI = @"http://my.cl.ly";
 - (NSError *)noUserOrPassError {
   NSDictionary *errorInfo = @{NSLocalizedDescriptionKey: NSLocalizedString(@"CloudApp Error", nil), NSLocalizedRecoverySuggestionErrorKey: NSLocalizedString(@"Missing CloudApp username or password", nil)};
   return [NSError errorWithDomain:KBSCloudAppAPIErrorDomain code:KBSCloudAppNoUserOrPass userInfo:errorInfo];
+}
+
+- (NSError *)invalidCredentialsError {
+  NSDictionary *errorInfo = @{NSLocalizedDescriptionKey: NSLocalizedString(@"CloudApp Error", nil), NSLocalizedRecoverySuggestionErrorKey: NSLocalizedString(@"Invalid CloudApp username or password", nil)};
+  return [NSError errorWithDomain:KBSCloudAppAPIErrorDomain code:KBSCloudAppAPIInvalidUser userInfo:errorInfo];
 }
 
 @end
