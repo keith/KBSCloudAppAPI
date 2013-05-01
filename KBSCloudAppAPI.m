@@ -34,13 +34,17 @@ static NSString * const baseAPI = @"http://my.cl.ly";
   if (!self) {
     return nil;
   }
-  
+
   [self registerHTTPOperationClass:[AFJSONRequestOperation class]];
   [self setParameterEncoding:AFJSONParameterEncoding];
   [self setDefaultHeader:@"Accept" value:@"application/json"];
   [self setDefaultHeader:@"Content-Type" value:@"application/json"];
 
   return self;
+}
+
+- (void)dealloc {
+  [self clearUsernameAndPassword];
 }
 
 #pragma mark - API Calls
@@ -54,7 +58,8 @@ static NSString * const baseAPI = @"http://my.cl.ly";
     return;
   }
 
-  NSMutableDictionary *data = [@{@"redirect_url": [url absoluteString]} mutableCopy];
+  NSMutableDictionary *data = [NSMutableDictionary dictionary];
+  [data setObject:[url absoluteString] forKey:@"redirect_url"];
   if (name) {
     [data setObject:name forKey:@"name"];
   }
@@ -71,6 +76,7 @@ static NSString * const baseAPI = @"http://my.cl.ly";
 #pragma mark - Username/Password Methods
 
 - (void)setUsername:(NSString *)name andPassword:(NSString *)pass {
+  [self clearUsernameAndPassword];
   self.username = [name copy];
   self.password = [pass copy];
   [self setAuthorizationHeaderWithUsername:self.username password:self.password];
