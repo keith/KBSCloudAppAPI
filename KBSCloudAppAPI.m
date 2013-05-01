@@ -24,8 +24,8 @@ static NSString * const baseAPI = @"http://my.cl.ly";
   return sharedClient;
 }
 
-- (id)init {
-  self = [super init];
+- (id)initWithBaseURL:(NSURL *)url {
+  self = [super initWithBaseURL:url];
   if (!self) {
     return nil;
   }
@@ -40,7 +40,7 @@ static NSString * const baseAPI = @"http://my.cl.ly";
 
 #pragma mark - API Calls
 
-- (void)shortenURL:(NSURL *)url withName:(NSString *)name andBlock:(void(^)(NSString *response, NSError *error))block {
+- (void)shortenURL:(NSURL *)url withName:(NSString *)name andBlock:(void(^)(NSDictionary *response, NSError *error))block {
   NSParameterAssert(url);
   NSParameterAssert(block);
 
@@ -49,28 +49,41 @@ static NSString * const baseAPI = @"http://my.cl.ly";
     return;
   }
 
-  NSDictionary *data = @{@"redirect_url": url, @"name": name};
-  NSURLRequest *request = [self requestWithMethod:@"POST" path:@"items" parameters:data];
-  AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-    block(JSON, nil);
-  } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-    block(nil, error);
-  }];
+  NSDictionary *data = @{@"item": @{@"redirect_url": [url absoluteString], @"name": name}};
+  NSLog(@"D %@", data);
+//  NSURLRequest *request = [self requestWithMethod:@"POST" path:@"items" parameters:data];
+//  NSLog(@"U: %@ UU: %@", request.URL, url);
   
-  [operation start];
-//  [self postPath:@"items" parameters:data success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//    block(responseObject, nil);
-//  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+  
+//  AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+//    block(JSON, nil);
+//  } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
 //    block(nil, error);
 //  }];
+//  
+//  [operation start];
+
+  [self postPath:@"items" parameters:data success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//    NSLog(@"%@", responseObject);
+//    NSString *responseString = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+    block(responseObject, nil);
+  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    block(nil, error);
+  }];
 }
 
 #pragma mark - Helper Methods
 
 - (void)setUsername:(NSString *)name andPassword:(NSString *)pass {
-  self.username = name;
-  self.password = pass;
+  self.username = [name copy];
+  self.password = [pass copy];
   [self setAuthorizationHeaderWithUsername:self.username password:self.password];
+}
+
+- (void)clearUsernameAndPassword {
+  self.username = nil;
+  self.password = nil;
+  [self clearAuthorizationHeader];
 }
 
 - (BOOL)hasUserAndPass {

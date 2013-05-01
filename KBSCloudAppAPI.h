@@ -21,7 +21,8 @@ extern NSString * const KBSCloudAppAPIErrorDomain;
 @property (nonatomic, strong) NSString *password;
 
 + (KBSCloudAppAPI *)sharedClient;
-- (void)shortenURL:(NSURL *)url withName:(NSString *)name andBlock:(void(^)(NSString *response, NSError *error))block;
+- (void)shortenURL:(NSURL *)url withName:(NSString *)name andBlock:(void(^)(NSDictionary *response, NSError *error))block;
 - (void)setUsername:(NSString *)name andPassword:(NSString *)pass;
+- (void)clearUsernameAndPassword;
 
 @end
