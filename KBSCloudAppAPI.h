@@ -17,12 +17,12 @@ extern NSString * const KBSCloudAppAPIErrorDomain;
 
 @interface KBSCloudAppAPI : AFHTTPClient
 
-@property (nonatomic, strong) NSString *username;
-@property (nonatomic, strong) NSString *password;
-
 + (KBSCloudAppAPI *)sharedClient;
-- (void)shortenURL:(NSURL *)url withName:(NSString *)name andBlock:(void(^)(NSDictionary *response, NSError *error))block;
+
+- (void)shortenURL:(NSURL *)url withName:(NSString *)name andBlock:(void(^)(NSURL *url, NSDictionary *response, NSError *error))block;
+
 - (void)setUsername:(NSString *)name andPassword:(NSString *)pass;
+- (BOOL)hasUsernameAndPassword;
 - (void)clearUsernameAndPassword;
 
 @end

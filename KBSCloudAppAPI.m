@@ -12,6 +12,11 @@ NSString * const KBSCloudAppAPIErrorDomain = @"com.keithsmiley.cloudappapi";
 
 static NSString * const baseAPI = @"http://my.cl.ly";
 
+@interface KBSCloudAppAPI ()
+@property (nonatomic, strong) NSString *username;
+@property (nonatomic, strong) NSString *password;
+@end
+
 @implementation KBSCloudAppAPI
 
 + (KBSCloudAppAPI *)sharedClient {
@@ -31,48 +36,39 @@ static NSString * const baseAPI = @"http://my.cl.ly";
   }
   
   [self registerHTTPOperationClass:[AFJSONRequestOperation class]];
+  [self setParameterEncoding:AFJSONParameterEncoding];
   [self setDefaultHeader:@"Accept" value:@"application/json"];
   [self setDefaultHeader:@"Content-Type" value:@"application/json"];
-  [self setParameterEncoding:AFJSONParameterEncoding];
 
   return self;
 }
 
 #pragma mark - API Calls
 
-- (void)shortenURL:(NSURL *)url withName:(NSString *)name andBlock:(void(^)(NSDictionary *response, NSError *error))block {
+- (void)shortenURL:(NSURL *)url withName:(NSString *)name andBlock:(void(^)(NSURL *url, NSDictionary *response, NSError *error))block {
   NSParameterAssert(url);
   NSParameterAssert(block);
 
-  if (![self hasUserAndPass]) {
-    block(nil, [self noUserOrPassError]);
+  if (![self hasUsernameAndPassword]) {
+    block(nil, nil, [self noUserOrPassError]);
     return;
   }
 
-  NSDictionary *data = @{@"item": @{@"redirect_url": [url absoluteString], @"name": name}};
-  NSLog(@"D %@", data);
-//  NSURLRequest *request = [self requestWithMethod:@"POST" path:@"items" parameters:data];
-//  NSLog(@"U: %@ UU: %@", request.URL, url);
+  NSMutableDictionary *data = [@{@"redirect_url": [url absoluteString]} mutableCopy];
+  if (name) {
+    [data setObject:name forKey:@"name"];
+  }
   
-  
-//  AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-//    block(JSON, nil);
-//  } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-//    block(nil, error);
-//  }];
-//  
-//  [operation start];
-
-  [self postPath:@"items" parameters:data success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//    NSLog(@"%@", responseObject);
-//    NSString *responseString = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-    block(responseObject, nil);
+  NSDictionary *item = @{@"item": data};
+  [self postPath:@"items" parameters:item success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    NSURL *responseURL = [NSURL URLWithString:[responseObject valueForKey:@"url"]];
+    block(responseURL, responseObject, nil);
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-    block(nil, error);
+    block(nil, nil, error);
   }];
 }
 
-#pragma mark - Helper Methods
+#pragma mark - Username/Password Methods
 
 - (void)setUsername:(NSString *)name andPassword:(NSString *)pass {
   self.username = [name copy];
@@ -86,14 +82,14 @@ static NSString * const baseAPI = @"http://my.cl.ly";
   [self clearAuthorizationHeader];
 }
 
-- (BOOL)hasUserAndPass {
+- (BOOL)hasUsernameAndPassword {
   return (self.username && self.password);
 }
 
 #pragma mark - Errors
 
 - (NSError *)noUserOrPassError {
-  NSDictionary *errorInfo = @{NSLocalizedDescriptionKey: NSLocalizedString(@"Cloud App Error", nil), NSLocalizedRecoverySuggestionErrorKey: NSLocalizedString(@"Missing Cloud App username or password", nil)};
+  NSDictionary *errorInfo = @{NSLocalizedDescriptionKey: NSLocalizedString(@"CloudApp Error", nil), NSLocalizedRecoverySuggestionErrorKey: NSLocalizedString(@"Missing CloudApp username or password", nil)};
   return [NSError errorWithDomain:KBSCloudAppAPIErrorDomain code:KBSCloudAppNoUserOrPass userInfo:errorInfo];
 }
 
