@@ -20,11 +20,9 @@ describe(@"setUsernameAndPassword", ^{
   });
 
   it(@"should save the username and password", ^{
-    expect([client username]).to.equal(nil);
-    expect([client password]).to.equal(nil);
+    expect([client hasUsernameAndPassword]).to.equal(false);
     [client setUsername:username andPassword:password];
-    expect([client username]).to.equal(username);
-    expect([client password]).to.equal(password);
+    expect([client hasUsernameAndPassword]).to.equal(true);
   });
   
   it(@"should have an authorization header", ^{
