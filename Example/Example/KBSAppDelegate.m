@@ -8,20 +8,22 @@
 
 #import "KBSAppDelegate.h"
 #import "KBSCloudAppAPI.h"
+#include <stdlib.h>
 
 @implementation KBSAppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
   KBSCloudAppAPI *api = [KBSCloudAppAPI sharedClient];
-  [api setUsername:@"username" andPassword:@"password"];
-  NSURL *url = [NSURL URLWithString:@"http://github.com"];
-  [api shortenURL:url withName:@"Github" andBlock:^(NSString *response, NSError *error) {
+  [api setUsername:@"" andPassword:@""];
+
+  NSURL *url = [NSURL URLWithString:@"http://github.com/"];
+  [api shortenURL:url withName:nil andBlock:^(NSURL *responseURL, NSDictionary *response, NSError *error) {
     if (error) {
       NSLog(@"%@", error);
+      [[NSAlert alertWithError:error] runModal];
     } else {
-      NSLog(@"%@", [response class]);
-      NSData *JSONData = [response dataUsingEncoding:NSUTF8StringEncoding];
-      NSLog(@"%@", [NSJSONSerialization JSONObjectWithData:JSONData options:0 error:nil]);
+      NSLog(@"%@", responseURL);
+      NSLog(@"%@", response);
     }
   }];
 }
