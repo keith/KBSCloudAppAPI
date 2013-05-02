@@ -70,7 +70,7 @@ static NSString * const baseAPI = @"http://my.cl.ly";
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     NSError *responseError = error;
     if (operation.response.statusCode == 403 || operation.response.statusCode == 401) {
-      error = [self invalidCredentialsError];
+      responseError = [self invalidCredentialsError];
     }
 
     block(nil, nil, responseError);
