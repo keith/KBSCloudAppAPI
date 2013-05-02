@@ -6,13 +6,14 @@
 //
 
 #import "KBSCloudAppAPI.h"
-#import "AFJSONRequestOperation.h"
+//#import "AFJSONRequestOperation.h"
 
 NSString * const KBSCloudAppAPIErrorDomain = @"com.keithsmiley.cloudappapi";
 
-static NSString * const baseAPI = @"http://my.cl.ly";
+static NSString * const baseAPI = @"http://my.cl.ly/";
 
 @interface KBSCloudAppAPI ()
+@property (nonatomic, strong) NSURL *baseURL;
 @property (nonatomic, strong) NSString *username;
 @property (nonatomic, strong) NSString *password;
 @end
@@ -23,21 +24,24 @@ static NSString * const baseAPI = @"http://my.cl.ly";
   static KBSCloudAppAPI *sharedClient = nil;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
-    sharedClient = [[KBSCloudAppAPI alloc] initWithBaseURL:[NSURL URLWithString:baseAPI]];
+//    sharedClient = [[KBSCloudAppAPI alloc] initWithBaseURL:[NSURL URLWithString:baseAPI]];
+    sharedClient = [[KBSCloudAppAPI alloc] init];
   });
 
   return sharedClient;
 }
 
-- (id)initWithBaseURL:(NSURL *)url {
-  self = [super initWithBaseURL:url];
+- (id)init {
+  self = [super init];
   if (!self) {
     return nil;
   }
+  
+  self.baseURL = [NSURL URLWithString:baseAPI];
 
-  [self registerHTTPOperationClass:[AFJSONRequestOperation class]];
-  [self setParameterEncoding:AFJSONParameterEncoding];
-  [self setDefaultHeader:@"Accept" value:@"application/json"];
+//  [self registerHTTPOperationClass:[AFJSONRequestOperation class]];
+//  [self setParameterEncoding:AFJSONParameterEncoding];
+//  [self setDefaultHeader:@"Accept" value:@"application/json"];
 
   return self;
 }
@@ -64,37 +68,86 @@ static NSString * const baseAPI = @"http://my.cl.ly";
   }
   
   NSDictionary *item = @{@"item": data};
-  NSMutableURLRequest *request = [self requestWithMethod:@"POST" path:@"items" parameters:item];
-  request.cachePolicy = NSURLRequestReloadIgnoringCacheData;
-  AFHTTPRequestOperation *operation = [self HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id responseObject) {
-    NSLog(@"ZZ: %@ %@", self.username, self.password);
-    NSURL *responseURL = [NSURL URLWithString:[responseObject valueForKey:@"url"]];
-    block(responseURL, responseObject, nil);
-  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-    NSLog(@"XX: %@ %@", self.username, self.password);
-    NSLog(@"E: %@", error);
-    if (operation.response.statusCode == 403 || operation.response.statusCode == 401) {
-      error = [self invalidCredentialsError];
+//  NSMutableURLRequest *request = [self requestWithMethod:@"POST" path:@"items" parameters:item];
+  NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[self.baseURL URLByAppendingPathComponent:@"items"]];
+  NSLog(@"%@", [self.baseURL URLByAppendingPathComponent:@"items"]);
+//  request.cachePolicy = NSURLRequestReloadIgnoringCacheData;
+  [request setHTTPMethod:@"POST"];
+  [request setHTTPShouldHandleCookies:false];
+	[request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+	[request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+  NSError *jsonError = nil;
+  [request setHTTPBody:[NSJSONSerialization dataWithJSONObject:item options:0 error:&jsonError]];
+  
+  if (jsonError)
+    NSLog(@"JE: %@", jsonError);
+  
+  NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+//  NSURLConnection *conn = [NSURLConnection connectionWithRequest:request delegate:self];
+  
+  [NSURLConnection sendAsynchronousRequest:request queue:queue completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+    if (error) {
+      NSLog(@"EE: %@", error);
+    } else {
+      NSLog(@"NE");
     }
-    
-    block(nil, nil, error);
   }];
-
-  [self enqueueHTTPRequestOperation:operation];
+//  [conn start];
+  
   return;
-  [self postPath:@"items" parameters:item success:^(AFHTTPRequestOperation *operation, id responseObject) {
-    NSLog(@"ZZ: %@ %@", self.username, self.password);
-    NSURL *responseURL = [NSURL URLWithString:[responseObject valueForKey:@"url"]];
-    block(responseURL, responseObject, nil);
-  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-    NSLog(@"XX: %@ %@", self.username, self.password);
-    NSLog(@"E: %@", error);
-    if (operation.response.statusCode == 403 || operation.response.statusCode == 401) {
-      error = [self invalidCredentialsError];
+  [NSURLConnection sendAsynchronousRequest:request queue:queue completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+
+    if (error) {
+        NSLog(@"E: %@", error);
+    } else {
+      NSLog(@"R: %@", response);
+      NSError *e = nil;
+      NSLog(@"%@", [NSJSONSerialization JSONObjectWithData:data options:0 error:&e]);
+      if (e) {
+        NSLog(@"EE %@", e);
+      }
     }
 
-    block(nil, nil, error);
   }];
+//  [conn start];
+  
+  
+  return;
+//  [self postPath:@"items" parameters:item success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//    NSLog(@"ZZ: %@ %@", self.username, self.password);
+//    NSURL *responseURL = [NSURL URLWithString:[responseObject valueForKey:@"url"]];
+//    block(responseURL, responseObject, nil);
+//  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//    NSLog(@"XX: %@ %@", self.username, self.password);
+//    NSLog(@"E: %@", error);
+//    if (operation.response.statusCode == 403 || operation.response.statusCode == 401) {
+//      error = [self invalidCredentialsError];
+//    }
+//
+//    block(nil, nil, error);
+//  }];
+}
+
+#pragma mark - NSURLConnectionDelegate
+
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection {
+  NSLog(@"Finished: %@", connection);
+}
+
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
+  NSLog(@"F: %@", error);
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge {
+  NSLog(@"Challenge");
+  if ([challenge previousFailureCount] == 0) {
+    NSURLCredential *cred = [NSURLCredential credentialWithUser:self.username password:self.password persistence:NSURLCredentialPersistenceNone];
+    [[challenge sender] useCredential:cred forAuthenticationChallenge:challenge];
+  }
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
+  NSLog(@"R %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:NULL]);
 }
 
 #pragma mark - Username/Password Methods
@@ -104,7 +157,7 @@ static NSString * const baseAPI = @"http://my.cl.ly";
   [self clearUsernameAndPassword];
   _username = [name copy];
   _password = [pass copy];
-  [self setDefaultCredential:[NSURLCredential credentialWithUser:self.username password:self.password persistence:NSURLCredentialPersistenceNone]];
+//  [self setDefaultCredential:[NSURLCredential credentialWithUser:self.username password:self.password persistence:NSURLCredentialPersistenceNone]];
   
   NSDictionary *a = [[NSURLCredentialStorage sharedCredentialStorage] allCredentials];
   for (NSURLProtectionSpace *c in a) {
@@ -119,7 +172,7 @@ static NSString * const baseAPI = @"http://my.cl.ly";
 - (void)clearUsernameAndPassword {
   _username = nil;
   _password = nil;
-  [self setDefaultCredential:nil];
+//  [self setDefaultCredential:nil];
   [self clearCloudAppCookies];
   [self clearURLCredentials];
 }

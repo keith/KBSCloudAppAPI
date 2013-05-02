@@ -6,7 +6,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "AFHTTPClient.h"
+//#import "AFHTTPClient.h"
 
 NS_ENUM(NSInteger, KBSCloudAppAPIErrorCode) {
   KBSCloudAppNoUserOrPass,
@@ -15,7 +15,7 @@ NS_ENUM(NSInteger, KBSCloudAppAPIErrorCode) {
 
 extern NSString * const KBSCloudAppAPIErrorDomain;
 
-@interface KBSCloudAppAPI : AFHTTPClient
+@interface KBSCloudAppAPI : NSObject <NSURLConnectionDelegate, NSURLConnectionDataDelegate>
 
 + (KBSCloudAppAPI *)sharedClient;
 
