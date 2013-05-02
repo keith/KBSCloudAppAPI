@@ -24,12 +24,6 @@ describe(@"setUsernameAndPassword", ^{
     [client setUsername:username andPassword:password];
     expect([client hasUsernameAndPassword]).to.equal(true);
   });
-  
-  it(@"should have an authorization header", ^{
-    expect([client defaultValueForHeader:@"Authorization"]).to.equal(nil);
-    [client setUsername:username andPassword:password];
-    expect([client defaultValueForHeader:@"Authorization"]).toNot.equal(nil);
-  });
 });
 
 describe(@"clearUsernameAndPassword", ^{
@@ -43,10 +37,9 @@ describe(@"clearUsernameAndPassword", ^{
     expect([client hasUsernameAndPassword]).to.equal(false);
   });
   
-  it(@"should remove the HTTP header", ^{
-    expect([client defaultValueForHeader:@"Authorization"]).toNot.equal(nil);
-    [client clearUsernameAndPassword];
-    expect([client defaultValueForHeader:@"Authorization"]).to.equal(nil);
+  it(@"should remove all associated cookies", ^{
+    NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[NSURL URLWithString:@"http://my.cl.ly"]];
+    expect(cookies.count).to.equal(0);
   });
 });
 
