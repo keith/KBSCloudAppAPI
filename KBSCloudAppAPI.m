@@ -64,26 +64,52 @@ static NSString * const baseAPI = @"http://my.cl.ly";
   }
   
   NSDictionary *item = @{@"item": data};
-  [self postPath:@"items" parameters:item success:^(AFHTTPRequestOperation *operation, id responseObject) {
+  NSMutableURLRequest *request = [self requestWithMethod:@"POST" path:@"items" parameters:item];
+  request.cachePolicy = NSURLRequestReloadIgnoringCacheData;
+  AFHTTPRequestOperation *operation = [self HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    NSLog(@"ZZ: %@ %@", self.username, self.password);
     NSURL *responseURL = [NSURL URLWithString:[responseObject valueForKey:@"url"]];
     block(responseURL, responseObject, nil);
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-    NSError *responseError = error;
+    NSLog(@"XX: %@ %@", self.username, self.password);
+    NSLog(@"E: %@", error);
     if (operation.response.statusCode == 403 || operation.response.statusCode == 401) {
-      responseError = [self invalidCredentialsError];
+      error = [self invalidCredentialsError];
+    }
+    
+    block(nil, nil, error);
+  }];
+
+  [self enqueueHTTPRequestOperation:operation];
+  return;
+  [self postPath:@"items" parameters:item success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    NSLog(@"ZZ: %@ %@", self.username, self.password);
+    NSURL *responseURL = [NSURL URLWithString:[responseObject valueForKey:@"url"]];
+    block(responseURL, responseObject, nil);
+  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    NSLog(@"XX: %@ %@", self.username, self.password);
+    NSLog(@"E: %@", error);
+    if (operation.response.statusCode == 403 || operation.response.statusCode == 401) {
+      error = [self invalidCredentialsError];
     }
 
-    block(nil, nil, responseError);
+    block(nil, nil, error);
   }];
 }
 
 #pragma mark - Username/Password Methods
 
 - (void)setUsername:(NSString *)name andPassword:(NSString *)pass {
+//  [self cancelAllHTTPOperationsWithMethod:@"POST" path:@"items"];
   [self clearUsernameAndPassword];
-  self.username = [name copy];
-  self.password = [pass copy];
+  _username = [name copy];
+  _password = [pass copy];
   [self setDefaultCredential:[NSURLCredential credentialWithUser:self.username password:self.password persistence:NSURLCredentialPersistenceNone]];
+  
+  NSDictionary *a = [[NSURLCredentialStorage sharedCredentialStorage] allCredentials];
+  for (NSURLProtectionSpace *c in a) {
+//    NSLog(@"%@", c.host);
+  }
 }
 
 - (BOOL)hasUsernameAndPassword {
@@ -91,16 +117,24 @@ static NSString * const baseAPI = @"http://my.cl.ly";
 }
 
 - (void)clearUsernameAndPassword {
-  self.username = nil;
-  self.password = nil;
+  _username = nil;
+  _password = nil;
   [self setDefaultCredential:nil];
   [self clearCloudAppCookies];
+  [self clearURLCredentials];
 }
 
 - (void)clearCloudAppCookies {
   NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[NSURL URLWithString:baseAPI]];
   for (NSHTTPCookie *c in cookies) {
     [[NSHTTPCookieStorage sharedHTTPCookieStorage] deleteCookie:c];
+  }
+}
+
+- (void)clearURLCredentials {
+  NSURLProtectionSpace *space = [[NSURLProtectionSpace alloc] initWithHost:@"my.cl.ly" port:0 protocol:@"http" realm:nil authenticationMethod:NSURLAuthenticationMethodHTTPDigest];
+  for (NSURLCredential *cred in [[NSURLCredentialStorage sharedCredentialStorage] credentialsForProtectionSpace:space]) {
+    [[NSURLCredentialStorage sharedCredentialStorage] removeCredential:cred forProtectionSpace:space];
   }
 }
 
