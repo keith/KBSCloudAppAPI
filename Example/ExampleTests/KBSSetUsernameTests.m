@@ -14,7 +14,11 @@ __block KBSCloudAppAPI *client = [KBSCloudAppAPI sharedClient];
 __block NSString *username = @"foo";
 __block NSString *password = @"bar";
 
-describe(@"setUsernameAndPassword", ^{  
+afterAll(^{
+  [client clearUsernameAndPassword];
+});
+
+describe(@"setUsernameAndPassword", ^{
   beforeEach(^{
     [client clearUsernameAndPassword];
   });
