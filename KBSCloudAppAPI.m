@@ -48,7 +48,7 @@ static NSString * const baseAPI = @"http://my.cl.ly";
 
 #pragma mark - API Calls
 
-- (void)shortenURL:(NSURL *)url withName:(NSString *)name andBlock:(void(^)(NSURL *url, NSDictionary *response, NSError *error))block {
+- (void)shortenURL:(NSURL *)url withName:(NSString *)name andBlock:(void(^)(NSURL *shortURL, NSDictionary *response, NSError *error))block {
   NSParameterAssert(url);
   NSParameterAssert(block);
 
