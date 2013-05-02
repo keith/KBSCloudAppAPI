@@ -64,22 +64,6 @@ static NSString * const baseAPI = @"http://my.cl.ly";
   }
   
   NSDictionary *item = @{@"item": data};
-//  NSMutableURLRequest *request = [self requestWithMethod:@"POST" path:@"items" parameters:item];
-//  [request setCachePolicy:NSURLRequestReloadIgnoringCacheData];
-//  AFHTTPRequestOperation *operation = [self HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//    NSURL *responseURL = [NSURL URLWithString:[responseObject valueForKey:@"url"]];
-//    block(responseURL, responseObject, nil);
-//  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//    NSError *responseError = error;
-//    if (operation.response.statusCode == 403 || operation.response.statusCode == 401) {
-//      responseError = [self invalidCredentialsError];
-//    }
-//    
-//    block(nil, nil, responseError);
-//  }];
-//  [self enqueueHTTPRequestOperation:operation];
-//  return;
-
   [self postPath:@"items" parameters:item success:^(AFHTTPRequestOperation *operation, id responseObject) {
     NSURL *responseURL = [NSURL URLWithString:[responseObject valueForKey:@"url"]];
     block(responseURL, responseObject, nil);
@@ -99,8 +83,11 @@ static NSString * const baseAPI = @"http://my.cl.ly";
   [self clearUsernameAndPassword];
   self.username = [name copy];
   self.password = [pass copy];
-  NSURLCredential *credential = [NSURLCredential credentialWithUser:self.username password:self.password persistence:NSURLCredentialPersistenceNone];
-  [self setDefaultCredential:credential];
+  [self setDefaultCredential:[NSURLCredential credentialWithUser:self.username password:self.password persistence:NSURLCredentialPersistenceNone]];
+}
+
+- (BOOL)hasUsernameAndPassword {
+  return (self.username && self.password);
 }
 
 - (void)clearUsernameAndPassword {
@@ -108,10 +95,6 @@ static NSString * const baseAPI = @"http://my.cl.ly";
   self.password = nil;
   [self setDefaultCredential:nil];
   [self clearCloudAppCookies];
-}
-
-- (BOOL)hasUsernameAndPassword {
-  return (self.username && self.password);
 }
 
 - (void)clearCloudAppCookies {
