@@ -1,7 +1,7 @@
 //
 //  KBSCloudAppAPI.m
 //
-//  Created by Keith Smiley on 4/24/13.
+//  Created by Keith Smiley
 //  Copyright (c) 2013 Keith Smiley. All rights reserved.
 //
 
@@ -12,12 +12,18 @@ NSString * const KBSCloudAppAPIErrorDomain = @"com.keithsmiley.cloudappapi";
 
 static NSString * const baseAPI = @"http://my.cl.ly/";
 typedef void (^shortURLBlock)(NSURL *shortURL, NSDictionary *response, NSError *error);
+typedef void (^validAccountBlock)(BOOL valid, NSError *error);
+
+static NSString *itemsPath   = @"items";
+static NSString *accountPath = @"account";
 
 @interface KBSCloudAppAPI ()
 @property (nonatomic, strong) NSURL *baseURL;
 @property (nonatomic, strong) NSString *username;
 @property (nonatomic, strong) NSString *password;
-@property (copy) shortURLBlock theReturnBlock;
+@property (nonatomic, strong) NSString *customURL;
+@property (copy) shortURLBlock shortenReturnBlock;
+@property (copy) validAccountBlock validAccBlock;
 @end
 
 @implementation KBSCloudAppAPI
@@ -49,12 +55,12 @@ typedef void (^shortURLBlock)(NSURL *shortURL, NSDictionary *response, NSError *
   NSParameterAssert(url);
   NSParameterAssert(block);
 
-  self.theReturnBlock = block;
-
   if (![self hasUsernameAndPassword]) {
     block(nil, nil, [self noUserOrPassError]);
     return;
   }
+
+  self.shortenReturnBlock = block;
 
   NSMutableDictionary *data = [NSMutableDictionary dictionary];
   [data setObject:[url absoluteString] forKey:@"redirect_url"];
@@ -63,7 +69,7 @@ typedef void (^shortURLBlock)(NSURL *shortURL, NSDictionary *response, NSError *
   }
 
   NSDictionary *item = @{@"item": data};
-  NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[self.baseURL URLByAppendingPathComponent:@"items"]];
+  NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[self.baseURL URLByAppendingPathComponent:itemsPath]];
   [request setHTTPMethod:@"POST"];
   [request setHTTPShouldHandleCookies:false];
   [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
@@ -72,7 +78,7 @@ typedef void (^shortURLBlock)(NSURL *shortURL, NSDictionary *response, NSError *
   NSError *jsonError = nil;
   NSData *httpData = [NSJSONSerialization dataWithJSONObject:item options:0 error:&jsonError];
   if (jsonError) {
-    self.theReturnBlock(nil, nil, );
+    self.shortenReturnBlock(nil, nil, jsonError);
     return;
   }
 
@@ -86,8 +92,16 @@ typedef void (^shortURLBlock)(NSURL *shortURL, NSDictionary *response, NSError *
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
   NSLog(@"F: %@", error);
-  if (self.theReturnBlock) {
-    self.theReturnBlock(nil, nil, error);
+
+  NSURLRequest *request = [connection originalRequest];
+  NSURL *requestURL = [request URL];
+  NSString *path = [requestURL lastPathComponent];
+  if ([path isEqualToString:itemsPath] && self.shortenReturnBlock) {
+    self.shortenReturnBlock(nil, nil, error);
+  } else if ([path isEqualToString:accountPath] && self.validAccBlock) {
+    self.validAccBlock(false, error);
+  } else {
+    NSLog(@"Unhandled connection Error: %@", error);
   }
 }
 
@@ -97,17 +111,50 @@ typedef void (^shortURLBlock)(NSURL *shortURL, NSDictionary *response, NSError *
     NSURLCredential *cred = [NSURLCredential credentialWithUser:self.username password:self.password persistence:NSURLCredentialPersistenceNone];
     [[challenge sender] useCredential:cred forAuthenticationChallenge:challenge];
   } else {
-    if (self.theReturnBlock) {
-      self.theReturnBlock(nil, nil, [self invalidCredentialsError]);
+    NSURLRequest *request = [connection originalRequest];
+    NSURL *requestURL = [request URL];
+    NSString *path = [requestURL lastPathComponent];
+
+    if ([path isEqualToString:itemsPath] && self.shortenReturnBlock) {
+      self.shortenReturnBlock(nil, nil, [self invalidCredentialsError]);
+    } else if ([path isEqualToString:accountPath] && self.validAccBlock) {
+      self.validAccBlock(false, [self invalidCredentialsError]);
+    } else {
+      NSLog(@"Unhandled credentials error Request: %@ URL: %@", request, requestURL);
     }
   }
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-  NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:NULL];
-  if (self.theReturnBlock) {
+  NSURLRequest *request = [connection originalRequest];
+  NSURL *requestURL = [request URL];
+  NSString *path = [requestURL lastPathComponent];
+
+  NSError *jsonError = nil;
+  NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
+  if (jsonError) {
+    if ([path isEqualToString:itemsPath] && self.shortenReturnBlock) {
+      self.shortenReturnBlock(nil, nil, [self internalError]);
+    } else if ([path isEqualToString:accountPath] && self.validAccBlock) {
+      self.validAccBlock(false, [self internalError]);
+    } else {
+      NSLog(@"Unhandled JSON Error: %@", jsonError);
+    }
+  }
+
+  if ([path isEqualToString:itemsPath] && self.shortenReturnBlock) {
     NSURL *responseURL = [NSURL URLWithString:[responseObject valueForKey:@"url"]];
-    self.theReturnBlock(responseURL, responseObject, nil);
+    self.shortenReturnBlock(responseURL, responseObject, nil);
+  } else if ([path isEqualToString:accountPath] && self.validAccBlock) {
+    NSString *customDomain = [responseObject valueForKey:@"domain"];
+    NSLog(@"Custom domain %@", customDomain);
+    if ((NSNull *)customDomain != [NSNull null] && customDomain) {
+      self.customURL = customDomain;
+    }
+
+    self.validAccBlock(true, nil);
+  } else {
+    NSLog(@"Unhandled JSON Error: %@", jsonError);
   }
 }
 
@@ -121,6 +168,30 @@ typedef void (^shortURLBlock)(NSURL *shortURL, NSDictionary *response, NSError *
 
 - (BOOL)hasUsernameAndPassword {
   return (self.username && self.password);
+}
+
+- (NSString *)usersCustomURL {
+  return self.customURL;
+}
+
+- (void)hasValidAccount:(void(^)(BOOL valid, NSError *error))block {
+  NSParameterAssert(block);
+
+  if (![self hasUsernameAndPassword]) {
+    block(false, [self noUserOrPassError]);
+    return;
+  }
+
+  self.validAccBlock = block;
+
+  NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[self.baseURL URLByAppendingPathComponent:accountPath]];
+  [request setHTTPMethod:@"GET"];
+  [request setHTTPShouldHandleCookies:false];
+  [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+  [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+
+  NSURLConnection *conn = [NSURLConnection connectionWithRequest:request delegate:self];
+  [conn start];
 }
 
 - (void)clearUsernameAndPassword {
@@ -157,7 +228,7 @@ typedef void (^shortURLBlock)(NSURL *shortURL, NSDictionary *response, NSError *
 }
 
 - (NSError *)internalError {
-  NSDictionary *errorInfo = @{NSLocalizedDescriptionKey: NSLocalizedString(@"CloudApp Error", nil), NSLocalizedRecoverySuggestionErrorKey: NSLocalizedString(@"Internal error while processing the data. Please try again.", nil)}
+  NSDictionary *errorInfo = @{NSLocalizedDescriptionKey: NSLocalizedString(@"CloudApp Error", nil), NSLocalizedRecoverySuggestionErrorKey: NSLocalizedString(@"Internal error while processing the data. Please try again.", nil)};
   return [NSError errorWithDomain:KBSCloudAppAPIErrorDomain code:KBSCloudAppInternalError userInfo: errorInfo];
 }
 
