@@ -10,7 +10,8 @@
 
 NS_ENUM(NSInteger, KBSCloudAppAPIErrorCode) {
   KBSCloudAppNoUserOrPass,
-  KBSCloudAppAPIInvalidUser
+  KBSCloudAppAPIInvalidUser,
+  KBSCloudAppInternalError
 };
 
 extern NSString * const KBSCloudAppAPIErrorDomain;
