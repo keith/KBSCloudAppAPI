@@ -8,7 +8,6 @@
 
 #import "KBSAppDelegate.h"
 #import "KBSCloudAppAPI.h"
-#include <stdlib.h>
 
 @implementation KBSAppDelegate
 
@@ -24,6 +23,14 @@
     } else {
       NSLog(@"%@", responseURL);
       NSLog(@"%@", response);
+    }
+  }];
+
+  [api hasValidAccount:^(BOOL valid, NSError *error) {
+    if (valid) {
+      NSLog(@"Is valid");
+    } else {
+      NSLog(@"Not valid %@", error);
     }
   }];
 }
