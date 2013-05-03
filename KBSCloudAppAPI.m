@@ -6,22 +6,22 @@
 //
 
 #import "KBSCloudAppAPI.h"
-//#import "AFJSONRequestOperation.h"
 
 NSString * const KBSCloudAppAPIErrorDomain = @"com.keithsmiley.cloudappapi";
 
 static NSString * const baseAPI = @"http://my.cl.ly/";
-typedef void (^shortURLBlock)(NSURL *shortURL, NSDictionary *response, NSError *error);
-typedef void (^validAccountBlock)(BOOL valid, NSError *error);
-
 static NSString *itemsPath   = @"items";
 static NSString *accountPath = @"account";
+
+typedef void (^shortURLBlock)(NSURL *shortURL, NSDictionary *response, NSError *error);
+typedef void (^validAccountBlock)(BOOL valid, NSError *error);
 
 @interface KBSCloudAppAPI ()
 @property (nonatomic, strong) NSURL *baseURL;
 @property (nonatomic, strong) NSString *username;
 @property (nonatomic, strong) NSString *password;
 @property (nonatomic, strong) NSString *customURL;
+
 @property (copy) shortURLBlock shortenReturnBlock;
 @property (copy) validAccountBlock validAccBlock;
 @end
@@ -106,7 +106,6 @@ static NSString *accountPath = @"account";
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge {
-  NSLog(@"Challenge");
   if ([challenge previousFailureCount] == 0) {
     NSURLCredential *cred = [NSURLCredential credentialWithUser:self.username password:self.password persistence:NSURLCredentialPersistenceNone];
     [[challenge sender] useCredential:cred forAuthenticationChallenge:challenge];
@@ -160,20 +159,6 @@ static NSString *accountPath = @"account";
 
 #pragma mark - Username/Password Methods
 
-- (void)setUsername:(NSString *)name andPassword:(NSString *)pass {
-  [self clearUsernameAndPassword];
-  _username = [name copy];
-  _password = [pass copy];
-}
-
-- (BOOL)hasUsernameAndPassword {
-  return (self.username && self.password);
-}
-
-- (NSString *)usersCustomURL {
-  return self.customURL;
-}
-
 - (void)hasValidAccount:(void(^)(BOOL valid, NSError *error))block {
   NSParameterAssert(block);
 
@@ -194,24 +179,30 @@ static NSString *accountPath = @"account";
   [conn start];
 }
 
+- (void)setUsername:(NSString *)name andPassword:(NSString *)pass {
+  [self clearUsernameAndPassword];
+  _username = [name copy];
+  _password = [pass copy];
+}
+
+- (BOOL)hasUsernameAndPassword {
+  return (self.username && self.password);
+}
+
+- (NSString *)usersCustomURL {
+  return self.customURL;
+}
+
 - (void)clearUsernameAndPassword {
   _username = nil;
   _password = nil;
   [self clearCloudAppCookies];
-  // [self clearURLCredentials];
 }
 
 - (void)clearCloudAppCookies {
   NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[NSURL URLWithString:baseAPI]];
   for (NSHTTPCookie *c in cookies) {
     [[NSHTTPCookieStorage sharedHTTPCookieStorage] deleteCookie:c];
-  }
-}
-
-- (void)clearURLCredentials {
-  NSURLProtectionSpace *space = [[NSURLProtectionSpace alloc] initWithHost:@"my.cl.ly" port:0 protocol:@"http" realm:nil authenticationMethod:NSURLAuthenticationMethodHTTPDigest];
-  for (NSURLCredential *cred in [[NSURLCredentialStorage sharedCredentialStorage] credentialsForProtectionSpace:space]) {
-    [[NSURLCredentialStorage sharedCredentialStorage] removeCredential:cred forProtectionSpace:space];
   }
 }
 
@@ -233,3 +224,4 @@ static NSString *accountPath = @"account";
 }
 
 @end
+
