@@ -34,6 +34,8 @@
 		C271B58C17288BCD0037EBB8 /* libSpecta-macosx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C271B57E17288BCD0037EBB8 /* libSpecta-macosx.a */; };
 		C271B5931728CC9E0037EBB8 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C271B5921728CC9E0037EBB8 /* SystemConfiguration.framework */; };
 		C271B5951728CCA30037EBB8 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C271B5941728CCA30037EBB8 /* CoreServices.framework */; };
+		C290A86C173AD07B00B7C035 /* KBSCloudAppURL.m in Sources */ = {isa = PBXBuildFile; fileRef = C290A86B173AD07B00B7C035 /* KBSCloudAppURL.m */; };
+		C290A86D173AD07B00B7C035 /* KBSCloudAppURL.m in Sources */ = {isa = PBXBuildFile; fileRef = C290A86B173AD07B00B7C035 /* KBSCloudAppURL.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -137,6 +139,8 @@
 		C271B58F17288C1D0037EBB8 /* KBSCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KBSCommon.h; sourceTree = "<group>"; };
 		C271B5921728CC9E0037EBB8 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		C271B5941728CCA30037EBB8 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
+		C290A86A173AD07B00B7C035 /* KBSCloudAppURL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KBSCloudAppURL.h; path = ../KBSCloudAppURL.h; sourceTree = "<group>"; };
+		C290A86B173AD07B00B7C035 /* KBSCloudAppURL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KBSCloudAppURL.m; path = ../KBSCloudAppURL.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -172,6 +176,8 @@
 				C271AAD71728800B0037EBB8 /* KBSCloudAppAPI.m */,
 				C21CE4B1173AA5D30044F75F /* KBSCloudAppUser.h */,
 				C21CE4B2173AA5D30044F75F /* KBSCloudAppUser.m */,
+				C290A86A173AD07B00B7C035 /* KBSCloudAppURL.h */,
+				C290A86B173AD07B00B7C035 /* KBSCloudAppURL.m */,
 				C271AAA817287E3B0037EBB8 /* Example */,
 				C271AAC517287E3C0037EBB8 /* ExampleTests */,
 				C271AAA117287E3B0037EBB8 /* Frameworks */,
@@ -472,6 +478,7 @@
 				C271AF3C17288ACE0037EBB8 /* AFXMLRequestOperation.m in Sources */,
 				C271AF3E17288ACE0037EBB8 /* UIImageView+AFNetworking.m in Sources */,
 				C21CE4B3173AA5D30044F75F /* KBSCloudAppUser.m in Sources */,
+				C290A86C173AD07B00B7C035 /* KBSCloudAppURL.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -482,6 +489,7 @@
 				C2656F371732DE2600809554 /* KBSShortenURLTests.m in Sources */,
 				C21CE4B4173AA5D30044F75F /* KBSCloudAppUser.m in Sources */,
 				C21CE4B8173AB8B50044F75F /* KBSUserTests.m in Sources */,
+				C290A86D173AD07B00B7C035 /* KBSCloudAppURL.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
