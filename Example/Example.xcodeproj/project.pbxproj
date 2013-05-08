@@ -21,15 +21,6 @@
 		C271AAC217287E3C0037EBB8 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C271AAA217287E3B0037EBB8 /* Cocoa.framework */; };
 		C271AACA17287E3C0037EBB8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C271AAC817287E3C0037EBB8 /* InfoPlist.strings */; };
 		C271AAD81728800B0037EBB8 /* KBSCloudAppAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = C271AAD71728800B0037EBB8 /* KBSCloudAppAPI.m */; };
-		C271AF2E17288ACE0037EBB8 /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = C271AADF17288ACB0037EBB8 /* AFHTTPClient.m */; };
-		C271AF3017288ACE0037EBB8 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = C271AAE117288ACB0037EBB8 /* AFHTTPRequestOperation.m */; };
-		C271AF3217288ACE0037EBB8 /* AFImageRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = C271AAE317288ACB0037EBB8 /* AFImageRequestOperation.m */; };
-		C271AF3417288ACE0037EBB8 /* AFJSONRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = C271AAE517288ACB0037EBB8 /* AFJSONRequestOperation.m */; };
-		C271AF3617288ACE0037EBB8 /* AFNetworkActivityIndicatorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C271AAE717288ACB0037EBB8 /* AFNetworkActivityIndicatorManager.m */; };
-		C271AF3817288ACE0037EBB8 /* AFPropertyListRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = C271AAEA17288ACB0037EBB8 /* AFPropertyListRequestOperation.m */; };
-		C271AF3A17288ACE0037EBB8 /* AFURLConnectionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = C271AAEC17288ACB0037EBB8 /* AFURLConnectionOperation.m */; };
-		C271AF3C17288ACE0037EBB8 /* AFXMLRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = C271AAEE17288ACB0037EBB8 /* AFXMLRequestOperation.m */; };
-		C271AF3E17288ACE0037EBB8 /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = C271AAF017288ACB0037EBB8 /* UIImageView+AFNetworking.m */; };
 		C271B57717288BA60037EBB8 /* libExpecta-macosx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C271B56D17288BA60037EBB8 /* libExpecta-macosx.a */; };
 		C271B58C17288BCD0037EBB8 /* libSpecta-macosx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C271B57E17288BCD0037EBB8 /* libSpecta-macosx.a */; };
 		C271B5931728CC9E0037EBB8 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C271B5921728CC9E0037EBB8 /* SystemConfiguration.framework */; };
@@ -73,25 +64,6 @@
 		C271AAC917287E3C0037EBB8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		C271AAD61728800B0037EBB8 /* KBSCloudAppAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KBSCloudAppAPI.h; path = ../KBSCloudAppAPI.h; sourceTree = "<group>"; };
 		C271AAD71728800B0037EBB8 /* KBSCloudAppAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KBSCloudAppAPI.m; path = ../KBSCloudAppAPI.m; sourceTree = "<group>"; };
-		C271AADE17288ACB0037EBB8 /* AFHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPClient.h; sourceTree = "<group>"; };
-		C271AADF17288ACB0037EBB8 /* AFHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPClient.m; sourceTree = "<group>"; };
-		C271AAE017288ACB0037EBB8 /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
-		C271AAE117288ACB0037EBB8 /* AFHTTPRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPRequestOperation.m; sourceTree = "<group>"; };
-		C271AAE217288ACB0037EBB8 /* AFImageRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFImageRequestOperation.h; sourceTree = "<group>"; };
-		C271AAE317288ACB0037EBB8 /* AFImageRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFImageRequestOperation.m; sourceTree = "<group>"; };
-		C271AAE417288ACB0037EBB8 /* AFJSONRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFJSONRequestOperation.h; sourceTree = "<group>"; };
-		C271AAE517288ACB0037EBB8 /* AFJSONRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFJSONRequestOperation.m; sourceTree = "<group>"; };
-		C271AAE617288ACB0037EBB8 /* AFNetworkActivityIndicatorManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworkActivityIndicatorManager.h; sourceTree = "<group>"; };
-		C271AAE717288ACB0037EBB8 /* AFNetworkActivityIndicatorManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFNetworkActivityIndicatorManager.m; sourceTree = "<group>"; };
-		C271AAE817288ACB0037EBB8 /* AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworking.h; sourceTree = "<group>"; };
-		C271AAE917288ACB0037EBB8 /* AFPropertyListRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFPropertyListRequestOperation.h; sourceTree = "<group>"; };
-		C271AAEA17288ACB0037EBB8 /* AFPropertyListRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFPropertyListRequestOperation.m; sourceTree = "<group>"; };
-		C271AAEB17288ACB0037EBB8 /* AFURLConnectionOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLConnectionOperation.h; sourceTree = "<group>"; };
-		C271AAEC17288ACB0037EBB8 /* AFURLConnectionOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLConnectionOperation.m; sourceTree = "<group>"; };
-		C271AAED17288ACB0037EBB8 /* AFXMLRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFXMLRequestOperation.h; sourceTree = "<group>"; };
-		C271AAEE17288ACB0037EBB8 /* AFXMLRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFXMLRequestOperation.m; sourceTree = "<group>"; };
-		C271AAEF17288ACB0037EBB8 /* UIImageView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+AFNetworking.h"; sourceTree = "<group>"; };
-		C271AAF017288ACB0037EBB8 /* UIImageView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+AFNetworking.m"; sourceTree = "<group>"; };
 		C271B54E17288BA60037EBB8 /* EXPBackwardCompatibility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EXPBackwardCompatibility.h; sourceTree = "<group>"; };
 		C271B54F17288BA60037EBB8 /* EXPBlockDefinedMatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EXPBlockDefinedMatcher.h; sourceTree = "<group>"; };
 		C271B55017288BA60037EBB8 /* EXPDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EXPDefines.h; sourceTree = "<group>"; };
@@ -263,39 +235,11 @@
 		C271AADA17288ACB0037EBB8 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
-				C271AADD17288ACB0037EBB8 /* AFNetworking */,
 				C271B54C17288BA60037EBB8 /* Expecta */,
 				C271B57C17288BBC0037EBB8 /* Specta */,
 			);
 			path = Vendor;
 			sourceTree = SOURCE_ROOT;
-		};
-		C271AADD17288ACB0037EBB8 /* AFNetworking */ = {
-			isa = PBXGroup;
-			children = (
-				C271AADE17288ACB0037EBB8 /* AFHTTPClient.h */,
-				C271AADF17288ACB0037EBB8 /* AFHTTPClient.m */,
-				C271AAE017288ACB0037EBB8 /* AFHTTPRequestOperation.h */,
-				C271AAE117288ACB0037EBB8 /* AFHTTPRequestOperation.m */,
-				C271AAE217288ACB0037EBB8 /* AFImageRequestOperation.h */,
-				C271AAE317288ACB0037EBB8 /* AFImageRequestOperation.m */,
-				C271AAE417288ACB0037EBB8 /* AFJSONRequestOperation.h */,
-				C271AAE517288ACB0037EBB8 /* AFJSONRequestOperation.m */,
-				C271AAE617288ACB0037EBB8 /* AFNetworkActivityIndicatorManager.h */,
-				C271AAE717288ACB0037EBB8 /* AFNetworkActivityIndicatorManager.m */,
-				C271AAE817288ACB0037EBB8 /* AFNetworking.h */,
-				C271AAE917288ACB0037EBB8 /* AFPropertyListRequestOperation.h */,
-				C271AAEA17288ACB0037EBB8 /* AFPropertyListRequestOperation.m */,
-				C271AAEB17288ACB0037EBB8 /* AFURLConnectionOperation.h */,
-				C271AAEC17288ACB0037EBB8 /* AFURLConnectionOperation.m */,
-				C271AAED17288ACB0037EBB8 /* AFXMLRequestOperation.h */,
-				C271AAEE17288ACB0037EBB8 /* AFXMLRequestOperation.m */,
-				C271AAEF17288ACB0037EBB8 /* UIImageView+AFNetworking.h */,
-				C271AAF017288ACB0037EBB8 /* UIImageView+AFNetworking.m */,
-			);
-			name = AFNetworking;
-			path = AFNetworking/AFNetworking;
-			sourceTree = "<group>";
 		};
 		C271B54C17288BA60037EBB8 /* Expecta */ = {
 			isa = PBXGroup;
@@ -468,15 +412,6 @@
 				C271AAAF17287E3C0037EBB8 /* main.m in Sources */,
 				C271AAB617287E3C0037EBB8 /* KBSAppDelegate.m in Sources */,
 				C271AAD81728800B0037EBB8 /* KBSCloudAppAPI.m in Sources */,
-				C271AF2E17288ACE0037EBB8 /* AFHTTPClient.m in Sources */,
-				C271AF3017288ACE0037EBB8 /* AFHTTPRequestOperation.m in Sources */,
-				C271AF3217288ACE0037EBB8 /* AFImageRequestOperation.m in Sources */,
-				C271AF3417288ACE0037EBB8 /* AFJSONRequestOperation.m in Sources */,
-				C271AF3617288ACE0037EBB8 /* AFNetworkActivityIndicatorManager.m in Sources */,
-				C271AF3817288ACE0037EBB8 /* AFPropertyListRequestOperation.m in Sources */,
-				C271AF3A17288ACE0037EBB8 /* AFURLConnectionOperation.m in Sources */,
-				C271AF3C17288ACE0037EBB8 /* AFXMLRequestOperation.m in Sources */,
-				C271AF3E17288ACE0037EBB8 /* UIImageView+AFNetworking.m in Sources */,
 				C21CE4B3173AA5D30044F75F /* KBSCloudAppUser.m in Sources */,
 				C290A86C173AD07B00B7C035 /* KBSCloudAppURL.m in Sources */,
 			);
