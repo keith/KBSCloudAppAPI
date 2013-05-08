@@ -80,7 +80,14 @@ typedef void (^validBlock)(BOOL valid, NSError *error);
   }
 }
 
-#pragma mark - Custom NSErrors
+#pragma mark - Class Methods
+
++ (void)clearCloudAppUser {
+  NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[NSURL URLWithString:baseAPI]];
+  for (NSHTTPCookie *c in cookies) {
+    [[NSHTTPCookieStorage sharedHTTPCookieStorage] deleteCookie:c];
+  }
+}
 
 + (NSError *)invalidCredentialsError {
   NSDictionary *errorInfo = @{NSLocalizedDescriptionKey: NSLocalizedString(@"CloudApp Error", nil), NSLocalizedRecoverySuggestionErrorKey: NSLocalizedString(@"Invalid CloudApp username or password", nil)};

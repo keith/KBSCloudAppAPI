@@ -19,6 +19,7 @@
 - (NSString *)shortURLBase;
 - (void)isValid:(void(^)(BOOL valid, NSError *error))block;
 
++ (void)clearCloudUser;
 + (NSError *)invalidCredentialsError;
 
 @end
