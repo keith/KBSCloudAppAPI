@@ -45,6 +45,7 @@ describe(@"shortenURL", ^{
       [client shortenURL:url withName:nil andBlock:^(NSURL *shortURL, NSDictionary *response, NSError *error) {}];
       expect(true).to.equal(true);
     } @catch (NSException *exception) {
+      expect(true).to.equal(false);
       expect(exception).to.equal(nil);
     }
   });
