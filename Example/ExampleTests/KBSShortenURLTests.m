@@ -12,8 +12,10 @@ SpecBegin(ShortenURL)
 
 __block KBSCloudAppAPI *client = [KBSCloudAppAPI sharedClient];
 __block NSURL *url = [NSURL URLWithString:@"http://github.com"];
-__block NSString *username = @"";
-__block NSString *password = @"";
+NSString *token = [[[NSProcessInfo processInfo] environment] objectForKey:@"CLOUD_CREDENTIALS"];
+NSArray *parts = [token componentsSeparatedByString:@":"];
+__block NSString *username = [parts objectAtIndex:0];
+__block NSString *password = [parts objectAtIndex:1];
 
 describe(@"shortenURL", ^{
   beforeEach(^{
@@ -98,7 +100,7 @@ describe(@"shortenURL", ^{
         expect([title rangeOfString:@"CloudApp"].location == NSNotFound).to.equal(false); // It should contain 'CloudApp'
         
         NSString *description  = [userInfo valueForKey:NSLocalizedRecoverySuggestionErrorKey];
-        expect([description rangeOfString:@"Missing"].location == NSNotFound).to.equal(false); // It should contain 'Invalid'
+        expect([description rangeOfString:@"Missing"].location == NSNotFound).to.equal(false); // It should contain 'Missing'
         
         done();
       }];
