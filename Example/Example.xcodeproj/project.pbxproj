@@ -27,6 +27,7 @@
 		C271B5951728CCA30037EBB8 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C271B5941728CCA30037EBB8 /* CoreServices.framework */; };
 		C290A86C173AD07B00B7C035 /* KBSCloudAppURL.m in Sources */ = {isa = PBXBuildFile; fileRef = C290A86B173AD07B00B7C035 /* KBSCloudAppURL.m */; };
 		C290A86D173AD07B00B7C035 /* KBSCloudAppURL.m in Sources */ = {isa = PBXBuildFile; fileRef = C290A86B173AD07B00B7C035 /* KBSCloudAppURL.m */; };
+		C290A8AE173AEA5200B7C035 /* KBSCloudAppAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = C271AAD71728800B0037EBB8 /* KBSCloudAppAPI.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -422,9 +423,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				C2656F371732DE2600809554 /* KBSShortenURLTests.m in Sources */,
-				C21CE4B4173AA5D30044F75F /* KBSCloudAppUser.m in Sources */,
 				C21CE4B8173AB8B50044F75F /* KBSUserTests.m in Sources */,
+				C290A8AE173AEA5200B7C035 /* KBSCloudAppAPI.m in Sources */,
 				C290A86D173AD07B00B7C035 /* KBSCloudAppURL.m in Sources */,
+				C21CE4B4173AA5D30044F75F /* KBSCloudAppUser.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
