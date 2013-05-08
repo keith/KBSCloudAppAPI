@@ -75,6 +75,48 @@ describe(@"user validity", ^{
       }];
     });
   });
+
+  describe(@"valid user", ^{
+    it(@"should return true and no error", ^AsyncBlock {
+      KBSCloudAppUser *aUser = [KBSCloudAppUser userWithUsername:username andPassword:password];
+      [aUser isValid:^(BOOL valid, NSError *error) {
+        expect(valid).to.equal(true);
+        expect(error).to.equal(nil);
+
+        done();
+      }];
+    }); 
+  });
+});
+
+describe(@"hasCustomDomain/customDomain/shortURLBase", ^{
+  it(@"should return false/nil/cl.ly for invalid users", ^AsyncBlock {
+    KBSCloudAppUser *aUser = [KBSCloudAppUser userWithUsername:@"foo" andPassword:@"bar"];
+    [aUser isValid:^(BOOL valid, NSError *error) {
+      expect(valid).to.equal(false);
+      expect(error).notTo.equal(nil);
+
+      expect([aUser hasCustomDomain]).to.equal(false);
+      expect([aUser customDomain]).to.equal(nil);
+      expect([aUser shortURLBase]).to.equal(@"cl.ly");
+
+      done();
+    }];
+  }); 
+
+  it(@"should return false/nil for users without custom domains", ^AsyncBlock {
+    KBSCloudAppUser *aUser = [KBSCloudAppUser userWithUsername:username andPassword:password];
+    [aUser isValid:^(BOOL valid, NSError *error) {
+      expect(valid).to.equal(true);
+      expect(error).to.equal(nil);
+
+      expect([aUser hasCustomDomain]).to.equal(false);
+      expect([aUser customDomain]).to.equal(nil);
+      expect([aUser shortURLBase]).to.equal(@"cl.ly");
+
+      done();
+    }];
+  });
 });
 
 SpecEnd
