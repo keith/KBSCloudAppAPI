@@ -31,12 +31,10 @@
     In the form of a block, it also returns the rest of the response if you need it
     Or an error if something went wrong
 
+TODO: FIX THIS
    @params
      URL: The NSURL object to be shortened **REQUIRED**
        NOTE: If this parameter is not passed or nil an exception will be raised
-
-     Name: The name you would like to appear in CloudApp
-       NOTE: If this is not passed CloudApp automatically uses the URL
 
      Block: This is the asyncronous return block **REQUIRED**
       NOTE: If this parameter is not passed or nil an exception will be raised
@@ -45,6 +43,6 @@
          https://github.com/cloudapp/api/blob/master/bookmark-link.md
        error: An error returned if there is an issue with the user or request
  */
-- (void)shortenURL:(NSURL *)url withName:(NSString *)name andBlock:(void(^)(KBSCloudAppURL *theURL, NSDictionary *response, NSError *error))block;
+- (void)shortenURLs:(NSArray *)urls andBlock:(void(^)(NSArray *theURLs, NSArray *response, NSError *error))block;
 
 @end

@@ -20,6 +20,6 @@
 - (id)initWithURL:(NSURL *)url andName:(NSString *)name;
 - (id)initWithURL:(NSURL *)url andName:(NSString *)name andShortURL:(NSURL *)shortURL;
 
-- (void)shorten:(void(^)(NSURL *shortURL, NSDictionary *response, NSError *error))block;
+- (void)shorten:(void(^)(NSArray *shortURLs, NSArray *response, NSError *error))block;
 
 @end

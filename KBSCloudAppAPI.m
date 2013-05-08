@@ -8,7 +8,7 @@
 #import "KBSCloudApp.h"
 #import "KBSCloudAppAPI.h"
 
-typedef void (^shortURLBlock)(KBSCloudAppURL *theURL, NSDictionary *response, NSError *error);
+typedef void (^shortURLBlock)(NSArray *theURLs, NSArray *response, NSError *error);
 
 @interface KBSCloudAppAPI ()
 @property (nonatomic, strong) NSMutableData *responseData;
@@ -29,8 +29,8 @@ typedef void (^shortURLBlock)(KBSCloudAppURL *theURL, NSDictionary *response, NS
 
 #pragma mark - API Calls
 
-- (void)shortenURL:(NSURL *)url withName:(NSString *)name andBlock:(void(^)(KBSCloudAppURL *theURL, NSDictionary *response, NSError *error))block {
-  NSParameterAssert(url);
+- (void)shortenURLs:(NSArray *)urls andBlock:(void(^)(NSArray *theURLs, NSArray *response, NSError *error))block {
+  NSParameterAssert(urls);
   NSParameterAssert(block);
 
   if (!self.user) {
@@ -40,13 +40,18 @@ typedef void (^shortURLBlock)(KBSCloudAppURL *theURL, NSDictionary *response, NS
 
   self.shortenReturnBlock = block;
 
-  NSMutableDictionary *data = [NSMutableDictionary dictionary];
-  [data setObject:[url absoluteString] forKey:@"redirect_url"];
-  if (name) {
-    [data setObject:name forKey:@"name"];
+  NSMutableArray *itemsArray = [NSMutableArray array];
+  for (KBSCloudAppURL *aURL in urls) {
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    [params setObject:[aURL.originalURL absoluteString] forKey:@"redirect_url"];
+    if (aURL.name) {
+      [params setObject:aURL.name forKey:@"name"];
+    }
+
+    [itemsArray addObject:params];
   }
 
-  NSDictionary *item = @{@"item": data};
+  NSDictionary *item = @{@"items": itemsArray};
   NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[[NSURL URLWithString:baseAPI] URLByAppendingPathComponent:itemsPath]];
   [request setHTTPMethod:@"POST"];
   [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
@@ -70,17 +75,22 @@ typedef void (^shortURLBlock)(KBSCloudAppURL *theURL, NSDictionary *response, NS
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
   NSError *jsonError = nil;
-  NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData:self.responseData options:0 error:&jsonError];
+  NSArray *responseObject = [NSJSONSerialization JSONObjectWithData:self.responseData options:0 error:&jsonError];
   if (jsonError) {
     self.shortenReturnBlock(nil, nil, [self internalError]);
     return;
   }
 
-  NSURL *originalURL = [NSURL URLWithString:[responseObject valueForKey:@"redirect_url"]];
-  NSURL *responseURL = [NSURL URLWithString:[responseObject valueForKey:@"url"]];
-  NSString *name = [responseObject valueForKey:@"name"];
-  KBSCloudAppURL *theURL = [KBSCloudAppURL URLWithURL:originalURL andName:name andShortURL:responseURL];
-  self.shortenReturnBlock(theURL, responseObject, nil);
+  NSMutableArray *responseURLs = [NSMutableArray array];
+  for (NSDictionary *response in responseObject) {
+    NSURL *originalURL = [NSURL URLWithString:[response valueForKey:@"redirect_url"]];
+    NSURL *responseURL = [NSURL URLWithString:[response valueForKey:@"url"]];
+    NSString *name = [response valueForKey:@"name"];
+    KBSCloudAppURL *theURL = [KBSCloudAppURL URLWithURL:originalURL andName:name andShortURL:responseURL];
+    [responseURLs addObject:theURL];
+  }
+
+  self.shortenReturnBlock(responseURLs, responseObject, nil);
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {

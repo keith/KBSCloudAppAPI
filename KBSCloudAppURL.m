@@ -49,8 +49,8 @@
   return self;
 }
 
-- (void)shorten:(void(^)(NSURL *shortURL, NSDictionary *response, NSError *error))block {
-  [[KBSCloudAppAPI sharedClient] shortenURL:self.originalURL withName:self.name andBlock:block];
+- (void)shorten:(void(^)(NSArray *shortURLs, NSArray *response, NSError *error))block {
+  [[KBSCloudAppAPI sharedClient] shortenURLs:@[self] andBlock:block];
 }
 
 @end
