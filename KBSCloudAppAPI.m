@@ -11,6 +11,7 @@
 typedef void (^shortURLBlock)(NSURL *shortURL, NSDictionary *response, NSError *error);
 
 @interface KBSCloudAppAPI ()
+@property (nonatomic, strong) NSMutableData *responseData;
 @property (copy) shortURLBlock shortenReturnBlock;
 @end
 
@@ -62,13 +63,29 @@ typedef void (^shortURLBlock)(NSURL *shortURL, NSDictionary *response, NSError *
   [request setHTTPBody:httpData];
 
   NSURLConnection *conn = [NSURLConnection connectionWithRequest:request delegate:self];
+  self.responseData = [NSMutableData data];
   [conn start];
 }
 
 #pragma mark - NSURLConnectionDelegate
 
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection {
+  NSError *jsonError = nil;
+  NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData:self.responseData options:0 error:&jsonError];
+  if (jsonError) {
+    self.shortenReturnBlock(nil, nil, [self internalError]);
+    return;
+  }
+
+  NSURL *responseURL = [NSURL URLWithString:[responseObject valueForKey:@"url"]];
+  self.shortenReturnBlock(responseURL, responseObject, nil);
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
+  [self.responseData appendData:data];
+}
+
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
-  NSLog(@"F: %@", error);
   self.shortenReturnBlock(nil, nil, error);
 }
 
@@ -79,17 +96,6 @@ typedef void (^shortURLBlock)(NSURL *shortURL, NSDictionary *response, NSError *
   } else {
     self.shortenReturnBlock(nil, nil, [KBSCloudAppUser invalidCredentialsError]);
   }
-}
-
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-  NSError *jsonError = nil;
-  NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
-  if (jsonError) {
-    self.shortenReturnBlock(nil, nil, [self internalError]);
-  }
-
-  NSURL *responseURL = [NSURL URLWithString:[responseObject valueForKey:@"url"]];
-  self.shortenReturnBlock(responseURL, responseObject, nil);
 }
 
 #pragma mark - Errors
