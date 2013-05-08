@@ -10,4 +10,4 @@
 #define EXP_SHORTHAND
 #import "Expecta.h"
 
-#import "KBSCloudAppAPI.h"
+#import "KBSCloudApp.h"
