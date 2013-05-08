@@ -37,6 +37,14 @@ typedef void (^validBlock)(BOOL valid, NSError *error);
   return (self.customDomain.length > 0);
 }
 
+- (NSString *)shortURLBase {
+  if ([self hasCustomDomain]) {
+    return self.customDomain;
+  } else {
+    return baseShortURL;
+  }
+}
+
 - (void)isValid:(void(^)(BOOL valid, NSError *error))block {
   NSParameterAssert(block);
   self.isValidBlock = block;

@@ -16,6 +16,7 @@
 - (void)setUserPassword:(NSString *)password;
 
 - (BOOL)hasCustomDomain;
+- (NSString *)shortURLBase;
 - (void)isValid:(void(^)(BOOL valid, NSError *error))block;
 
 @end
