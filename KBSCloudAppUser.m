@@ -82,7 +82,7 @@ typedef void (^validBlock)(BOOL valid, NSError *error);
 
 #pragma mark - Class Methods
 
-+ (void)clearCloudAppUser {
++ (void)clearCloudAppUsers {
   NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[NSURL URLWithString:baseAPI]];
   for (NSHTTPCookie *c in cookies) {
     [[NSHTTPCookieStorage sharedHTTPCookieStorage] deleteCookie:c];
