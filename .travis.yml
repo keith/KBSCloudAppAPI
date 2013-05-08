@@ -1,4 +1,12 @@
+---
 language: objective-c
 before_script:
-  - './setup.sh'
-  - 'cd Example'
+- ./setup.sh
+- cd Example
+env:
+  global:
+  - secure: ! 'UYWpq1V/eF+4f23y3wzMRLIy7+nKXvqGm2p+NcN60c18VOwq5Dpcx5ahNzb4
+
+      85IFWFxtSUOAItDgJAHfBuHpPxNvwJgbfNnhHZEokuxP3shlLXD5lFZiBb5M
+
+      Du/fvpoccVxNPPfpIaQbpjwYAYXBs+68pRg/IM9+cz4x4x3FQqA='
