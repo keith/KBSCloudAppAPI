@@ -112,6 +112,11 @@ typedef void (^shortURLBlock)(NSArray *theURLs, NSArray *response, NSError *erro
 
 #pragma mark - Other
 
+- (void)setUser:(KBSCloudAppUser *)user {
+  [KBSCloudAppUser clearCloudAppUsers];
+  _user = user;
+}
+
 - (NSError *)internalError {
   NSDictionary *errorInfo = @{NSLocalizedDescriptionKey: NSLocalizedString(@"CloudApp Error", nil), NSLocalizedRecoverySuggestionErrorKey: NSLocalizedString(@"Internal error while processing the data. Please try again.", nil)};
   return [NSError errorWithDomain:KBSCloudAppAPIErrorDomain code:KBSCloudAppInternalError userInfo: errorInfo];
