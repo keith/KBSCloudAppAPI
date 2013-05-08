@@ -46,7 +46,7 @@ typedef void (^shortURLBlock)(NSURL *shortURL, NSDictionary *response, NSError *
   }
 
   NSDictionary *item = @{@"item": data};
-  NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[self.baseURL URLByAppendingPathComponent:itemsPath]];
+  NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[[NSURL URLWithString:baseAPI] URLByAppendingPathComponent:itemsPath]];
   [request setHTTPMethod:@"POST"];
   [request setHTTPShouldHandleCookies:false];
   [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
@@ -90,28 +90,6 @@ typedef void (^shortURLBlock)(NSURL *shortURL, NSDictionary *response, NSError *
 
   NSURL *responseURL = [NSURL URLWithString:[responseObject valueForKey:@"url"]];
   self.shortenReturnBlock(responseURL, responseObject, nil);
-}
-
-#pragma mark - Username/Password Methods
-
-- (void)hasValidAccount:(void(^)(BOOL valid, NSError *error))block {
-  NSParameterAssert(block);
-
-  if (!self.user) {
-    block(false, [self noUserOrPassError]);
-    return;
-  }
-
-  self.validAccBlock = block;
-
-  NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[self.baseURL URLByAppendingPathComponent:accountPath]];
-  [request setHTTPMethod:@"GET"];
-  [request setHTTPShouldHandleCookies:false];
-  [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-  [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-
-  NSURLConnection *conn = [NSURLConnection connectionWithRequest:request delegate:self];
-  [conn start];
 }
 
 #pragma mark - Errors
