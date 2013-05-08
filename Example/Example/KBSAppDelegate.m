@@ -14,40 +14,29 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
   NSString *token = [[[NSProcessInfo processInfo] environment] objectForKey:@"CLOUD_CREDENTIALS"];
   NSArray *parts = [token componentsSeparatedByString:@":"];
-  NSString *username = [parts objectAtIndex:0];
-  NSString *password = [parts objectAtIndex:1];
+  NSString *username = [parts objectAtIndex:0]; // Enter a valid username here
+  NSString *password = [parts objectAtIndex:1]; // Enter a valid password here
   
   KBSCloudAppUser *user = [[KBSCloudAppUser alloc] initWithUsername:username andPassword:password];
   [user isValid:^(BOOL valid, NSError *error) {
     if (valid) {
-      NSLog(@"Y C: %@", user.customDomain);
+      NSLog(@"Valid user");
+
+      KBSCloudAppAPI *api = [KBSCloudAppAPI sharedClient];
+      [api setUser:user];
+      KBSCloudAppURL *url = [KBSCloudAppURL URLWithURL:[NSURL URLWithString:@"http://github.com/"]];
+      [api shortenURLs:@[url] andBlock:^(NSArray *theURLs, NSArray *response, NSError *error) {
+        if (error) {
+          NSLog(@"Error shortening URL: %@", error);
+        } else {
+          KBSCloudAppURL *theURL = [theURLs objectAtIndex:0];
+          NSLog(@"URL Shortened, short URL: %@", theURL.shortURL);
+        }
+      }];
     } else {
-      NSLog(@"N %@", error);
-      [[NSAlert alertWithError:error] runModal];
+      NSLog(@"Invalid user/error: %@", error);
     }
   }];
-  
-//  KBSCloudAppAPI *api = [KBSCloudAppAPI sharedClient];
-//  [api setUsername:@"" andPassword:@""];
-//
-//  NSURL *url = [NSURL URLWithString:@"http://github.com/"];
-//  [api shortenURL:url withName:nil andBlock:^(NSURL *responseURL, NSDictionary *response, NSError *error) {
-//    if (error) {
-//      NSLog(@"%@", error);
-//      [[NSAlert alertWithError:error] runModal];
-//    } else {
-//      NSLog(@"%@", responseURL);
-//      NSLog(@"%@", response);
-//    }
-//  }];
-//
-//  [api hasValidAccount:^(BOOL valid, NSError *error) {
-//    if (valid) {
-//      NSLog(@"Is valid");
-//    } else {
-//      NSLog(@"Not valid %@", error);
-//    }
-//  }];
 }
 
 @end
