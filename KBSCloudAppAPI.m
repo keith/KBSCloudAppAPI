@@ -34,7 +34,7 @@ typedef void (^shortURLBlock)(NSURL *shortURL, NSDictionary *response, NSError *
   NSParameterAssert(block);
 
   if (!self.user) {
-    block(nil, nil, [self noUserOrPassError]);
+    block(nil, nil, [KBSCloudAppUser missingCredentialsError]);
     return;
   }
 
@@ -98,13 +98,7 @@ typedef void (^shortURLBlock)(NSURL *shortURL, NSDictionary *response, NSError *
   }
 }
 
-#pragma mark - Errors
-
-- (NSError *)noUserOrPassError {
-  NSDictionary *errorInfo = @{NSLocalizedDescriptionKey: NSLocalizedString(@"CloudApp Error", nil), NSLocalizedRecoverySuggestionErrorKey: NSLocalizedString(@"Missing CloudApp username or password", nil)};
-  return [NSError errorWithDomain:KBSCloudAppAPIErrorDomain code:KBSCloudAppNoUserOrPass userInfo:errorInfo];
-}
-
+#pragma mark - Other
 
 - (NSError *)internalError {
   NSDictionary *errorInfo = @{NSLocalizedDescriptionKey: NSLocalizedString(@"CloudApp Error", nil), NSLocalizedRecoverySuggestionErrorKey: NSLocalizedString(@"Internal error while processing the data. Please try again.", nil)};

@@ -67,8 +67,7 @@ typedef void (^validBlock)(BOOL valid, NSError *error);
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
-  NSError *jsonError = nil;
-  NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData:self.responseData options:0 error:&jsonError];
+  NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData:self.responseData options:0 error:nil];
   NSString *customDomain = [responseObject valueForKey:@"domain"];
   if ((NSNull *)customDomain != [NSNull null] && customDomain) {
     _customDomain = customDomain;
@@ -115,6 +114,11 @@ typedef void (^validBlock)(BOOL valid, NSError *error);
 + (NSError *)invalidCredentialsError {
   NSDictionary *errorInfo = @{NSLocalizedDescriptionKey: NSLocalizedString(@"CloudApp Error", nil), NSLocalizedRecoverySuggestionErrorKey: NSLocalizedString(@"Invalid CloudApp username or password", nil)};
   return [NSError errorWithDomain:KBSCloudAppAPIErrorDomain code:KBSCloudAppAPIInvalidUser userInfo:errorInfo];
+}
+
++ (NSError *)missingCredentialsError {
+  NSDictionary *errorInfo = @{NSLocalizedDescriptionKey: NSLocalizedString(@"CloudApp Error", nil), NSLocalizedRecoverySuggestionErrorKey: NSLocalizedString(@"Missing CloudApp username or password", nil)};
+  return [NSError errorWithDomain:KBSCloudAppAPIErrorDomain code:KBSCloudAppNoUserOrPass userInfo:errorInfo];
 }
 
 @end

@@ -22,5 +22,6 @@
 
 + (void)clearCloudAppUsers;
 + (NSError *)invalidCredentialsError;
++ (NSError *)missingCredentialsError;
 
 @end
