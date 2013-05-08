@@ -11,10 +11,40 @@
 
 @interface KBSCloudAppAPI : NSObject <NSURLConnectionDelegate, NSURLConnectionDataDelegate>
 
+/*
+   This is the KBSCloudAppUser object you should set with
+    a custom user
+
+   This is used when CloudApp asks for authentication
+ */
 @property (nonatomic, strong) KBSCloudAppUser *user;
 
+/*
+   This shared instance of KBSCloudAppAPI is used for shortening URLs
+    You probably shouldn't create your own instance of this
+    Although I don't see any reason it wouldn't work
+ */
 + (KBSCloudAppAPI *)sharedClient;
 
-- (void)shortenURL:(NSURL *)url withName:(NSString *)name andBlock:(void(^)(NSURL *shortURL, NSDictionary *response, NSError *error))block;
+/*
+   This method shortens the passed URL via CloudApp and returns the short URL
+    In the form of a block, it also returns the rest of the response if you need it
+    Or an error if something went wrong
+
+   @params
+     URL: The NSURL object to be shortened **REQUIRED**
+       NOTE: If this parameter is not passed or nil an exception will be raised
+
+     Name: The name you would like to appear in CloudApp
+       NOTE: If this is not passed CloudApp automatically uses the URL
+
+     Block: This is the asyncronous return block **REQUIRED**
+      NOTE: If this parameter is not passed or nil an exception will be raised
+       theURL: An KBSCloudAppURL object with the short version along with the original URL
+       response: The entire response from the CloudApp API shown here:
+         https://github.com/cloudapp/api/blob/master/bookmark-link.md
+       error: An error returned if there is an issue with the user or request
+ */
+- (void)shortenURL:(NSURL *)url withName:(NSString *)name andBlock:(void(^)(KBSCloudAppURL *theURL, NSDictionary *response, NSError *error))block;
 
 @end

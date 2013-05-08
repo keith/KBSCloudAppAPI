@@ -8,7 +8,7 @@
 #import "KBSCloudApp.h"
 #import "KBSCloudAppAPI.h"
 
-typedef void (^shortURLBlock)(NSURL *shortURL, NSDictionary *response, NSError *error);
+typedef void (^shortURLBlock)(KBSCloudAppURL *theURL, NSDictionary *response, NSError *error);
 
 @interface KBSCloudAppAPI ()
 @property (nonatomic, strong) NSMutableData *responseData;
@@ -29,7 +29,7 @@ typedef void (^shortURLBlock)(NSURL *shortURL, NSDictionary *response, NSError *
 
 #pragma mark - API Calls
 
-- (void)shortenURL:(NSURL *)url withName:(NSString *)name andBlock:(void(^)(NSURL *shortURL, NSDictionary *response, NSError *error))block {
+- (void)shortenURL:(NSURL *)url withName:(NSString *)name andBlock:(void(^)(KBSCloudAppURL *theURL, NSDictionary *response, NSError *error))block {
   NSParameterAssert(url);
   NSParameterAssert(block);
 
@@ -76,8 +76,11 @@ typedef void (^shortURLBlock)(NSURL *shortURL, NSDictionary *response, NSError *
     return;
   }
 
+  NSURL *originalURL = [NSURL URLWithString:[responseObject valueForKey:@"redirect_url"]];
   NSURL *responseURL = [NSURL URLWithString:[responseObject valueForKey:@"url"]];
-  self.shortenReturnBlock(responseURL, responseObject, nil);
+  NSString *name = [responseObject valueForKey:@"name"];
+  KBSCloudAppURL *theURL = [KBSCloudAppURL URLWithURL:originalURL andName:name andShortURL:responseURL];
+  self.shortenReturnBlock(theURL, responseObject, nil);
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
