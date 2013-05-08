@@ -11,7 +11,6 @@
 typedef void (^validBlock)(BOOL valid, NSError *error);
 
 @interface KBSCloudAppUser ()
-@property (nonatomic, strong) NSString *password;
 @property (copy) validBlock isValidBlock;
 @end
 
@@ -27,10 +26,6 @@ typedef void (^validBlock)(BOOL valid, NSError *error);
   self.password = [password copy];
 
   return self;
-}
-
-- (void)setUserPassword:(NSString *)password {
-  _password = [password copy];
 }
 
 - (BOOL)hasCustomDomain {

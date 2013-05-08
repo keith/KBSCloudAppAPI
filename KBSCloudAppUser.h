@@ -10,10 +10,10 @@
 @interface KBSCloudAppUser : NSObject <NSURLConnectionDelegate, NSURLConnectionDataDelegate>
 
 @property (nonatomic, strong) NSString *username;
+@property (nonatomic, strong) NSString *password;
 @property (nonatomic, strong, readonly) NSString *customDomain;
 
 - (id)initWithUsername:(NSString *)username andPassword:(NSString *)password;
-- (void)setUserPassword:(NSString *)password;
 
 - (BOOL)hasCustomDomain;
 - (NSString *)shortURLBase;
