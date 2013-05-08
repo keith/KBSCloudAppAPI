@@ -156,4 +156,36 @@ describe(@"clear cookies", ^{
   });
 });
 
+describe(@"isEqual", ^{
+  describe(@"parts of them are different", ^{
+    it(@"should return false if the passwords are different", ^{
+      KBSCloudAppUser *user1 = [KBSCloudAppUser userWithUsername:@"foo" andPassword:@"bar"];
+      KBSCloudAppUser *user2 = [KBSCloudAppUser userWithUsername:@"foo" andPassword:@"foo"];
+      expect([user1 isEqual:user2]).to.equal(false);
+      expect([user1 isEqualTo:user2]).to.equal(false);
+    });
+    
+    it(@"should return false if the usernames are different", ^{
+      KBSCloudAppUser *user1 = [KBSCloudAppUser userWithUsername:@"bar" andPassword:@"bar"];
+      KBSCloudAppUser *user2 = [KBSCloudAppUser userWithUsername:@"foo" andPassword:@"bar"];
+      expect([user1 isEqual:user2]).to.equal(false);
+      expect([user1 isEqualTo:user2]).to.equal(false);
+    });
+    
+    it(@"should return false if everything is different", ^{
+      KBSCloudAppUser *user1 = [KBSCloudAppUser userWithUsername:@"foo" andPassword:@"bar"];
+      KBSCloudAppUser *user2 = [KBSCloudAppUser userWithUsername:@"baz" andPassword:@"quxx"];
+      expect([user1 isEqual:user2]).to.equal(false);
+      expect([user1 isEqualTo:user2]).to.equal(false);
+    });
+  });
+  
+  it(@"should return true if they have the same username and password", ^{
+    KBSCloudAppUser *user1 = [KBSCloudAppUser userWithUsername:@"foo" andPassword:@"bar"];
+    KBSCloudAppUser *user2 = [KBSCloudAppUser userWithUsername:@"foo" andPassword:@"bar"];
+    expect([user1 isEqual:user2]).to.equal(true);
+    expect([user1 isEqualTo:user2]).to.equal(true);
+  });
+});
+
 SpecEnd

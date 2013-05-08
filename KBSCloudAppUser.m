@@ -106,6 +106,10 @@ typedef void (^validBlock)(BOOL valid, NSError *error);
   return false;
 }
 
+- (BOOL)isEqualTo:(id)object {
+  return [self isEqual:object];
+}
+
 #pragma mark - Class Methods
 
 + (void)clearCloudAppUsers {
