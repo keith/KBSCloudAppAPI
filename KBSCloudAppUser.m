@@ -47,7 +47,7 @@ typedef void (^validBlock)(BOOL valid, NSError *error);
 
 - (void)isValid:(void(^)(BOOL valid, NSError *error))block {
   NSParameterAssert(block);
-  if (!(self.username && self.password)) {
+  if (!self.username || !self.password)
     block(false, [KBSCloudAppUser missingCredentialsError]);
     return;
   }
