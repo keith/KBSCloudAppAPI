@@ -76,13 +76,13 @@ typedef void (^validBlock)(BOOL valid, NSError *error);
     NSURLCredential *cred = [NSURLCredential credentialWithUser:self.username password:self.password persistence:NSURLCredentialPersistenceNone];
     [[challenge sender] useCredential:cred forAuthenticationChallenge:challenge];
   } else {
-    self.isValidBlock(false, [self invalidCredentialsError]);
+    self.isValidBlock(false, [KBSCloudAppUser invalidCredentialsError]);
   }
 }
 
 #pragma mark - Custom NSErrors
 
-- (NSError *)invalidCredentialsError {
++ (NSError *)invalidCredentialsError {
   NSDictionary *errorInfo = @{NSLocalizedDescriptionKey: NSLocalizedString(@"CloudApp Error", nil), NSLocalizedRecoverySuggestionErrorKey: NSLocalizedString(@"Invalid CloudApp username or password", nil)};
   return [NSError errorWithDomain:KBSCloudAppAPIErrorDomain code:KBSCloudAppAPIInvalidUser userInfo:errorInfo];
 }

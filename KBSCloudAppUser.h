@@ -19,4 +19,6 @@
 - (NSString *)shortURLBase;
 - (void)isValid:(void(^)(BOOL valid, NSError *error))block;
 
++ (NSError *)invalidCredentialsError;
+
 @end
