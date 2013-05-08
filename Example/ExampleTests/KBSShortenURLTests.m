@@ -12,8 +12,14 @@ SpecBegin(ShortenURL)
 
 __block KBSCloudAppAPI *client = [KBSCloudAppAPI sharedClient];
 __block NSURL *url = [NSURL URLWithString:@"http://github.com"];
+__block NSString *username = @"";
+__block NSString *password = @"";
 
 describe(@"shortenURL", ^{
+  beforeEach(^{
+    [KBSCloudAppUser clearCloudAppUsers];
+  });
+  
   it(@"should raise an exception if no URL is passed", ^{
     @try {
       [client shortenURL:nil withName:@"foo" andBlock:^(NSURL *shortURL, NSDictionary *response, NSError *error) {}];
@@ -58,7 +64,8 @@ describe(@"shortenURL", ^{
   
   describe(@"invalid credentials", ^{
     it(@"should return an error from the server", ^AsyncBlock {
-      [client setUsername:@"foo" andPassword:@"bar"];
+      KBSCloudAppUser *user = [[KBSCloudAppUser alloc] initWithUsername:@"foo" andPassword:@"bar"];
+      [client setUser:user];
       [client shortenURL:url withName:nil andBlock:^(NSURL *shortURL, NSDictionary *response, NSError *error) {
         NSLog(@"Running Async Failure Examples");
         expect(shortURL).to.equal(nil);
@@ -77,9 +84,31 @@ describe(@"shortenURL", ^{
     });
   });
   
+  describe(@"missing credentials", ^{
+    it(@"should return an error from the server", ^AsyncBlock {
+      [client setUser:nil];
+      [client shortenURL:url withName:nil andBlock:^(NSURL *shortURL, NSDictionary *response, NSError *error) {
+        NSLog(@"Running Async Missing Examples");
+        expect(shortURL).to.equal(nil);
+        expect(response).to.equal(nil);
+        expect(error).notTo.equal(nil);
+        
+        NSDictionary *userInfo = [error userInfo];
+        NSString *title = [userInfo valueForKey:NSLocalizedDescriptionKey];
+        expect([title rangeOfString:@"CloudApp"].location == NSNotFound).to.equal(false); // It should contain 'CloudApp'
+        
+        NSString *description  = [userInfo valueForKey:NSLocalizedRecoverySuggestionErrorKey];
+        expect([description rangeOfString:@"Missing"].location == NSNotFound).to.equal(false); // It should contain 'Invalid'
+        
+        done();
+      }];
+    });
+  });
+  
   describe(@"valid credentials", ^{
     it(@"should return a valid response", ^AsyncBlock {
-      [client setUsername:@"" andPassword:@""];
+      KBSCloudAppUser *user = [[KBSCloudAppUser alloc] initWithUsername:username andPassword:password];
+      [client setUser:user];
       [client shortenURL:url withName:nil andBlock:^(NSURL *shortURL, NSDictionary *response, NSError *error) {
         NSLog(@"Running Async Valid Examples");
         expect(shortURL).notTo.equal(nil);
