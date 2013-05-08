@@ -31,17 +31,15 @@
     In the form of a block, it also returns the rest of the response if you need it
     Or an error if something went wrong
 
-TODO: FIX THIS
-   @params
-     URL: The NSURL object to be shortened **REQUIRED**
-       NOTE: If this parameter is not passed or nil an exception will be raised
+     urls: An NSArray of KBSCloudAppURL objects to be shortened **REQUIRED**
+       NOTE: If this parameter is nil an exception will be raised
 
      Block: This is the asyncronous return block **REQUIRED**
       NOTE: If this parameter is not passed or nil an exception will be raised
-       theURL: An KBSCloudAppURL object with the short version along with the original URL
+        theURLs: An NSArray of KBSCloudAppURL objects with the short version along with the original URL
        response: The entire response from the CloudApp API shown here:
-         https://github.com/cloudapp/api/blob/master/bookmark-link.md
-       error: An error returned if there is an issue with the user or request
+            https://github.com/cloudapp/api/blob/master/bookmark-multiple-links.md
+          error: An error returned if there is an issue with the user or request
  */
 - (void)shortenURLs:(NSArray *)urls andBlock:(void(^)(NSArray *theURLs, NSArray *response, NSError *error))block;
 
