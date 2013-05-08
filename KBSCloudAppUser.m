@@ -11,10 +11,15 @@
 typedef void (^validBlock)(BOOL valid, NSError *error);
 
 @interface KBSCloudAppUser ()
+@property (nonatomic, strong) NSMutableData *responseData;
 @property (copy) validBlock isValidBlock;
 @end
 
 @implementation KBSCloudAppUser
+
++ (instancetype)userWithUsername:(NSString *)username andPassword:(NSString *)password {
+  return [[KBSCloudAppUser alloc] initWithUsername:username andPassword:password];
+}
 
 - (id)initWithUsername:(NSString *)username andPassword:(NSString *)password {
   self = [super init];
@@ -51,14 +56,19 @@ typedef void (^validBlock)(BOOL valid, NSError *error);
   [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
 
   NSURLConnection *conn = [NSURLConnection connectionWithRequest:request delegate:self];
+  self.responseData = [NSMutableData data];
   [conn start];
 }
 
-#pragma mark - NSURLConnectionDelegate
+#pragma mark - NSURLConnectionDelegate/NSURLConnectionDataDelegate
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
+  [self.responseData appendData:data];
+}
+
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection {
   NSError *jsonError = nil;
-  NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
+  NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData:self.responseData options:0 error:&jsonError];
   NSString *customDomain = [responseObject valueForKey:@"domain"];
   if ((NSNull *)customDomain != [NSNull null] && customDomain) {
     _customDomain = customDomain;
@@ -78,6 +88,19 @@ typedef void (^validBlock)(BOOL valid, NSError *error);
   } else {
     self.isValidBlock(false, [KBSCloudAppUser invalidCredentialsError]);
   }
+}
+
+- (BOOL)isEqual:(id)object {
+  if (![object isKindOfClass:[KBSCloudAppUser class]]) {
+    return false;
+  }
+
+  KBSCloudAppUser *other = (KBSCloudAppUser *)object;
+  if ([self.username isEqualToString:other.username] && [self.password isEqualToString:other.password]) {
+    return true;
+  }
+  
+  return false;
 }
 
 #pragma mark - Class Methods

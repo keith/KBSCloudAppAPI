@@ -13,6 +13,7 @@
 @property (nonatomic, strong) NSString *password;
 @property (nonatomic, strong, readonly) NSString *customDomain;
 
++ (instancetype)userWithUsername:(NSString *)username andPassword:(NSString *)password;
 - (id)initWithUsername:(NSString *)username andPassword:(NSString *)password;
 
 - (BOOL)hasCustomDomain;
