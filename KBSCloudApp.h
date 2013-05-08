@@ -19,7 +19,7 @@ NS_ENUM(NSInteger, KBSCloudAppAPIErrorCode) {
 
 static NSString * const KBSCloudAppAPIErrorDomain = @"com.keithsmiley.cloudappapi";
 static NSString * const baseAPI = @"http://my.cl.ly/";
-static NSString * const baseShortURL = @"cl.ly"
+static NSString * const baseShortURL = @"cl.ly";
 static NSString * const itemsPath   = @"items";
 static NSString * const accountPath = @"account";
 
