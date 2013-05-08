@@ -5,13 +5,8 @@
 //  Copyright (c) 2013 Keith Smiley. All rights reserved.
 //
 
+#import "KBSCloudApp.h"
 #import "KBSCloudAppAPI.h"
-
-NSString * const KBSCloudAppAPIErrorDomain = @"com.keithsmiley.cloudappapi";
-
-static NSString * const baseAPI = @"http://my.cl.ly/";
-static NSString *itemsPath   = @"items";
-static NSString *accountPath = @"account";
 
 typedef void (^shortURLBlock)(NSURL *shortURL, NSDictionary *response, NSError *error);
 typedef void (^validAccountBlock)(BOOL valid, NSError *error);
@@ -115,9 +110,9 @@ typedef void (^validAccountBlock)(BOOL valid, NSError *error);
     NSString *path = [requestURL lastPathComponent];
 
     if ([path isEqualToString:itemsPath] && self.shortenReturnBlock) {
-      self.shortenReturnBlock(nil, nil, [self invalidCredentialsError]);
+//      self.shortenReturnBlock(nil, nil, [self invalidCredentialsError]);
     } else if ([path isEqualToString:accountPath] && self.validAccBlock) {
-      self.validAccBlock(false, [self invalidCredentialsError]);
+//      self.validAccBlock(false, [self invalidCredentialsError]);
     } else {
       NSLog(@"Unhandled credentials error Request: %@ URL: %@", request, requestURL);
     }
@@ -213,10 +208,6 @@ typedef void (^validAccountBlock)(BOOL valid, NSError *error);
   return [NSError errorWithDomain:KBSCloudAppAPIErrorDomain code:KBSCloudAppNoUserOrPass userInfo:errorInfo];
 }
 
-- (NSError *)invalidCredentialsError {
-  NSDictionary *errorInfo = @{NSLocalizedDescriptionKey: NSLocalizedString(@"CloudApp Error", nil), NSLocalizedRecoverySuggestionErrorKey: NSLocalizedString(@"Invalid CloudApp username or password", nil)};
-  return [NSError errorWithDomain:KBSCloudAppAPIErrorDomain code:KBSCloudAppAPIInvalidUser userInfo:errorInfo];
-}
 
 - (NSError *)internalError {
   NSDictionary *errorInfo = @{NSLocalizedDescriptionKey: NSLocalizedString(@"CloudApp Error", nil), NSLocalizedRecoverySuggestionErrorKey: NSLocalizedString(@"Internal error while processing the data. Please try again.", nil)};

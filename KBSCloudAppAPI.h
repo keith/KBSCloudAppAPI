@@ -7,14 +7,6 @@
 
 #import <Foundation/Foundation.h>
 
-NS_ENUM(NSInteger, KBSCloudAppAPIErrorCode) {
-  KBSCloudAppNoUserOrPass,
-  KBSCloudAppAPIInvalidUser,
-  KBSCloudAppInternalError
-};
-
-extern NSString * const KBSCloudAppAPIErrorDomain;
-
 @interface KBSCloudAppAPI : NSObject <NSURLConnectionDelegate, NSURLConnectionDataDelegate>
 
 + (KBSCloudAppAPI *)sharedClient;
