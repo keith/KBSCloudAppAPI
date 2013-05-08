@@ -10,6 +10,7 @@
 
 #import "KBSCloudAppUser.h"
 #import "KBSCloudAppAPI.h"
+#import "KBSCloudAppURL.h"
 
 NS_ENUM(NSInteger, KBSCloudAppAPIErrorCode) {
   KBSCloudAppNoUserOrPass,
