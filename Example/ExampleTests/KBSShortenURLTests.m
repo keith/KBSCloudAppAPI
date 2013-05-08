@@ -105,4 +105,29 @@ describe(@"shortenURL", ^{
   });
 });
 
+describe(@"saving multiple URLs", ^{
+  __block NSURL *url1 = [NSURL URLWithString:@"google.com"];
+  __block NSURL *url2 = [NSURL URLWithString:@"gmail.com"];
+  __block KBSCloudAppURL *theURL1 = [KBSCloudAppURL URLWithURL:url1];
+  __block KBSCloudAppURL *theURL2 = [KBSCloudAppURL URLWithURL:url2];
+
+  it(@"should return an array of both the shortened URLs with their original URLs", ^AsyncBlock {
+    KBSCloudAppUser *user = [[KBSCloudAppUser alloc] initWithUsername:username andPassword:password];
+    [client setUser:user];
+    [client shortenURLs:@[theURL1, theURL2] andBlock:^(NSArray *theURLs, NSArray *response, NSError *error) {
+      NSLog(@"Running Async multiple URL example");
+      expect(theURLs.count).to.equal(2);
+      expect(response.count).to.equal(2);
+      expect(error).to.equal(nil);
+
+      KBSCloudAppURL *responseURL1 = [theURLs objectAtIndex:0];
+      expect(responseURL1.originalURL).to.equal(theURL1.originalURL);
+      KBSCloudAppURL *responseURL2 = [theURLs objectAtIndex:1];
+      expect(responseURL2.originalURL).to.equal(theURL2.originalURL);
+
+      done();
+    }];
+  });
+});
+
 SpecEnd
