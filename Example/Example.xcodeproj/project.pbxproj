@@ -49,6 +49,7 @@
 /* Begin PBXFileReference section */
 		C21CE4B1173AA5D30044F75F /* KBSCloudAppUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KBSCloudAppUser.h; path = ../KBSCloudAppUser.h; sourceTree = "<group>"; };
 		C21CE4B2173AA5D30044F75F /* KBSCloudAppUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KBSCloudAppUser.m; path = ../KBSCloudAppUser.m; sourceTree = "<group>"; };
+		C21CE4B5173AAD090044F75F /* KBSCloudApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KBSCloudApp.h; path = ../KBSCloudApp.h; sourceTree = "<group>"; };
 		C224DFA917316F3600AED0C5 /* KBSSetUsernameTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KBSSetUsernameTests.m; sourceTree = "<group>"; };
 		C2656F361732DE2600809554 /* KBSShortenURLTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KBSShortenURLTests.m; sourceTree = "<group>"; };
 		C271AA9F17287E3B0037EBB8 /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -166,6 +167,7 @@
 		C271AA9617287E3B0037EBB8 = {
 			isa = PBXGroup;
 			children = (
+				C21CE4B5173AAD090044F75F /* KBSCloudApp.h */,
 				C271AAD61728800B0037EBB8 /* KBSCloudAppAPI.h */,
 				C271AAD71728800B0037EBB8 /* KBSCloudAppAPI.m */,
 				C21CE4B1173AA5D30044F75F /* KBSCloudAppUser.h */,
