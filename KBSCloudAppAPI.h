@@ -7,7 +7,11 @@
 
 #import <Foundation/Foundation.h>
 
+@class KBSCloudAppUser;
+
 @interface KBSCloudAppAPI : NSObject <NSURLConnectionDelegate, NSURLConnectionDataDelegate>
+
+@property (nonatomic, strong) KBSCloudAppUser *user;
 
 + (KBSCloudAppAPI *)sharedClient;
 
