@@ -15,8 +15,10 @@
 
 + (instancetype)URLWithURL:(NSURL *)url;
 + (instancetype)URLWithURL:(NSURL *)url andName:(NSString *)name;
++ (instancetype)URLWithURL:(NSURL *)url andName:(NSString *)name andShortURL:(NSURL *)shortURL;
 - (id)initWithURL:(NSURL *)url;
 - (id)initWithURL:(NSURL *)url andName:(NSString *)name;
+- (id)initWithURL:(NSURL *)url andName:(NSString *)name andShortURL:(NSURL *)shortURL;
 
 - (void)shorten:(void(^)(NSURL *shortURL, NSDictionary *response, NSError *error))block;
 
