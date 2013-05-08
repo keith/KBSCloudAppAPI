@@ -2,4 +2,4 @@ language: objective-c
 before_script:
   - './setup.sh'
   - 'cd Example'
-secure: "HlTnljRkiYXOMZZWX+4p5u594eMEsKMVfFAMCWnbZ5vw0Y4Sk9unbD+IJtj0\nu2ja62PY2yYm+xUAeKCArDWb+p52J/ZMKUiDyDX5aDvWGBw0k/TWA/2vxLks\nuBzca4pIatDXEBpI0bFt8LegShEUOvYTosAYJjqcMox9wLNYt7c="
+secure: "i1jH1r5YliUW6YZoyc/n0WNvAOZ4/v3StIKKXHYi8I0s8swFr6hFU7WvEfJP\n6/RThBUged8NEcTFNOB7EH/Oj7qzp3GZPLPQcJjTDtMD7iiGV865SHaXEHbp\nqaCSdrYTeuAFC301GFkmnF/Ahgwqq1T9vJ9GWUfMAxaOeoUiRO0="
