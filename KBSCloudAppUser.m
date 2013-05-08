@@ -56,7 +56,6 @@ typedef void (^validBlock)(BOOL valid, NSError *error);
 
   NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[[NSURL URLWithString:baseAPI] URLByAppendingPathComponent:accountPath]];
   [request setHTTPMethod:@"GET"];
-  [request setHTTPShouldHandleCookies:false];
   [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
   [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
 

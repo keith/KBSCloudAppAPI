@@ -49,7 +49,6 @@ typedef void (^shortURLBlock)(NSURL *shortURL, NSDictionary *response, NSError *
   NSDictionary *item = @{@"item": data};
   NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[[NSURL URLWithString:baseAPI] URLByAppendingPathComponent:itemsPath]];
   [request setHTTPMethod:@"POST"];
-  [request setHTTPShouldHandleCookies:false];
   [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
   [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
 
