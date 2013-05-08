@@ -4,6 +4,3 @@
 [submodule "Example/Vendor/Specta"]
 	path = Example/Vendor/Specta
 	url = git://github.com/petejkim/specta.git
-[submodule "Example/Vendor/AFNetworking"]
-	path = Example/Vendor/AFNetworking
-	url = git://github.com/AFNetworking/AFNetworking.git
