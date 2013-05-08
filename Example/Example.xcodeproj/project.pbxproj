@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		C21CE4B3173AA5D30044F75F /* KBSCloudAppUser.m in Sources */ = {isa = PBXBuildFile; fileRef = C21CE4B2173AA5D30044F75F /* KBSCloudAppUser.m */; };
 		C21CE4B4173AA5D30044F75F /* KBSCloudAppUser.m in Sources */ = {isa = PBXBuildFile; fileRef = C21CE4B2173AA5D30044F75F /* KBSCloudAppUser.m */; };
+		C21CE4B8173AB8B50044F75F /* KBSUserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C21CE4B7173AB8B50044F75F /* KBSUserTests.m */; };
 		C2656F371732DE2600809554 /* KBSShortenURLTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C2656F361732DE2600809554 /* KBSShortenURLTests.m */; };
 		C271AAA317287E3B0037EBB8 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C271AAA217287E3B0037EBB8 /* Cocoa.framework */; };
 		C271AAAD17287E3B0037EBB8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C271AAAB17287E3B0037EBB8 /* InfoPlist.strings */; };
@@ -49,6 +50,7 @@
 		C21CE4B1173AA5D30044F75F /* KBSCloudAppUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KBSCloudAppUser.h; path = ../KBSCloudAppUser.h; sourceTree = "<group>"; };
 		C21CE4B2173AA5D30044F75F /* KBSCloudAppUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KBSCloudAppUser.m; path = ../KBSCloudAppUser.m; sourceTree = "<group>"; };
 		C21CE4B5173AAD090044F75F /* KBSCloudApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KBSCloudApp.h; path = ../KBSCloudApp.h; sourceTree = "<group>"; };
+		C21CE4B7173AB8B50044F75F /* KBSUserTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KBSUserTests.m; sourceTree = "<group>"; };
 		C2656F361732DE2600809554 /* KBSShortenURLTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KBSShortenURLTests.m; sourceTree = "<group>"; };
 		C271AA9F17287E3B0037EBB8 /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C271AAA217287E3B0037EBB8 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
@@ -237,6 +239,7 @@
 			children = (
 				C271B58F17288C1D0037EBB8 /* KBSCommon.h */,
 				C2656F361732DE2600809554 /* KBSShortenURLTests.m */,
+				C21CE4B7173AB8B50044F75F /* KBSUserTests.m */,
 				C271AAC617287E3C0037EBB8 /* Supporting Files */,
 			);
 			path = ExampleTests;
@@ -478,6 +481,7 @@
 			files = (
 				C2656F371732DE2600809554 /* KBSShortenURLTests.m in Sources */,
 				C21CE4B4173AA5D30044F75F /* KBSCloudAppUser.m in Sources */,
+				C21CE4B8173AB8B50044F75F /* KBSUserTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
